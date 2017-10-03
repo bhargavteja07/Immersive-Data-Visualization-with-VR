@@ -1,0 +1,36 @@
+{	
+	"Systems" :
+	[
+		{
+			"sunScale" : "201750",
+			"sunName" : "Gliese 581",
+			"sunTexture" : "mstar",
+			"sunVar" : "M3V" ,
+			"sunHabitat" : "0.013",
+			"Planets" : 
+				[
+					{
+						"planetDistance" : "4188740",
+						"planetSize" :  "8919",
+						"planetSpeed" :  "0.009",
+						"textureName" : "venus",
+						"planetName" :  "e"
+					},
+					{
+						"planetDistance" : "6133513",
+						"planetSize" :  "30554" ,
+						"planetSpeed" :  "0.014" ,
+						"textureName" : "jupiter",
+						"planetName" :  "b"
+					},
+					{
+						"planetDistance" : "10920645",
+						"planetSize" :  "20147",
+						"planetSpeed" :  "0.18",
+						"textureName" : "neptune",
+						"planetName" :  "c"
+					}
+				]
+		}
+	]
+}
