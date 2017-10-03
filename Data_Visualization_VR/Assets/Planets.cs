@@ -199,9 +199,8 @@ public class Planets : MonoBehaviour {
 
 		float sunScale = float.Parse(star [0]) / 100000F;
 		float centerSunSize = 0.25F;
-
-		// set the habitable zone based on the star's luminosity
-		float innerHab = float.Parse (star[4]) * 9.5F;
+        // set the habitable zone based on the star's luminosity
+        float innerHab = float.Parse (star[4]) * 9.5F;
 		float outerHab = float.Parse (star[4]) * 14F;
 
 
@@ -307,63 +306,39 @@ public class Planets : MonoBehaviour {
 
         string path;
         string jsonString;
-        path = "Assets\\Resources\\Planetary_system_information.json";
+        path = "Assets/Resources/Planetary_system_information.json";
         jsonString = File.ReadAllText(path);
         SystemList sl = JsonUtility.FromJson<SystemList>(jsonString);
         Debug.Log(sl);
         Debug.Log ("Started Planets.cs");
-
-		string[] sol = new string[5] { "695500", "Our Sun", "sol", "G2V" , "1.0"};
-
-		string[,] solPlanets = new string[8, 5] {
-			{   "57910000",  "2440",    "0.24", "mercury", "mercury" },
-			{  "108200000",  "6052",    "0.62", "venus",   "venus" },
-			{  "149600000",  "6371",    "1.00", "earthmap", "earth" },
-			{  "227900000",  "3400",    "1.88", "mars",     "mars" },
-			{  "778500000", "69911",   "11.86", "jupiter", "jupiter" },
-			{ "1433000000", "58232",   "29.46", "saturn",   "saturn" },
-			{ "2877000000", "25362",   "84.01", "neptune", "uranus" },
-			{ "4503000000", "24622",  "164.80", "uranus", "neptune" }
-		};
-
-
-		string[] TauCeti = new string[5] { "556400", "Tau Ceti", "gstar", "G8.5V" , "0.52"};
-
-		string[,] TauCetiPlanets = new string[5, 5] {
-			{ "15707776",  "9009",   "0.04", "venus",   "b" },
-			{ "29171585", "11217",   "0.09", "venus", "c" },
-			{ "55949604", "12088",   "0.26", "mercury",  "d" },
-			{ "82578024", "13211",   "0.46", "mercury", "e" },
-			{"201957126", "16454",   "1.75", "uranus",  "f" }
-		};
-
-
-		string[] Gliese581 = new string[5] { "201750", "Gliese 581", "mstar", "M3V" , "0.013"};
-
-		string[,] Gliese581Planets = new string[3, 5] {
-			{ "4188740",  "8919",   "0.009", "venus",   "e" },
-			{ "6133513", "30554",   "0.014", "jupiter",   "b" },
-			{"10920645", "20147",   "0.18", "neptune",  "c" }
-		};
-			
-		GameObject allCenter = new GameObject();
-		allCenter.name = "all systems";
-
-
-		var systemOffset = new Vector3 (0, 0, 0);
-		var oneOffset = new Vector3 (0, -30, 0);
-	
-		dealWithSystem (sol, solPlanets, systemOffset, allCenter);
-
-		systemOffset += oneOffset;
-
-		dealWithSystem (TauCeti, TauCetiPlanets, systemOffset, allCenter);
-
-		systemOffset += oneOffset;
-
-		dealWithSystem (Gliese581, Gliese581Planets, systemOffset, allCenter);
-
-			
+        GameObject allCenter = new GameObject();
+        allCenter.name = "all systems";
+        var systemOffset = new Vector3(0, 0, 0);
+        var oneOffset = new Vector3(0, -30, 0);
+        int total_systems=sl.Systems.Count;
+        string[] sol = new string[5];
+        for (int i=0;i<total_systems;i++)
+        {
+            int k = 0;
+            sol[k++] = sl.Systems[i].sunScale;
+            sol[k++] = sl.Systems[i].sunName;
+            sol[k++] = sl.Systems[i].sunTexture;
+            sol[k++] = sl.Systems[i].sunVar;
+            sol[k++] = sl.Systems[i].sunHabitat;
+            int planet_count = sl.Systems[i].Planets.Count;
+            string[,] planets = new string[planet_count,5];
+            for(int j=0;j<planet_count;j++)
+            {
+                k = 0;
+                planets[j,k++] = sl.Systems[i].Planets[j].planetDistance;
+                planets[j, k++] = sl.Systems[i].Planets[j].planetSize;
+                planets[j, k++] = sl.Systems[i].Planets[j].planetSpeed;
+                planets[j, k++] = sl.Systems[i].Planets[j].textureName;
+                planets[j, k++] = sl.Systems[i].Planets[j].planetName;
+            }
+            dealWithSystem(sol, planets, systemOffset, allCenter);
+            systemOffset += oneOffset;
+        }			
 		allCenter.transform.localScale = new Vector3 (0.1F, 0.1F, 0.1F);
 	}
 
@@ -379,7 +354,7 @@ public class Planats
     public string planetDistance;
     public string planetSize;
     public string planetSpeed;
-    public string TextureName;
+    public string textureName;
     public string planetName;
 }
 
@@ -391,8 +366,8 @@ public class systems
     public string sunName;
     public string sunTexture;
     public string sunVar;
-    public string sunHbitat;
-    public List<Planats> planet_list;
+    public string sunHabitat;
+    public List<Planats> Planets;
 }
 
 
