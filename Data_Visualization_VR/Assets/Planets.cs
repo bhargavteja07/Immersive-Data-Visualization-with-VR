@@ -311,8 +311,6 @@ public class Planets : MonoBehaviour {
         jsonString = File.ReadAllText(path);
         SystemList sl = JsonUtility.FromJson<SystemList>(jsonString);
         Debug.Log(sl);
-
-
         Debug.Log ("Started Planets.cs");
 
 		string[] sol = new string[5] { "695500", "Our Sun", "sol", "G2V" , "1.0"};
@@ -378,22 +376,22 @@ public class Planets : MonoBehaviour {
 [System.Serializable]
 public class Planats
 {
-    string planetDistance;
-    string planetSize;
-    string planetSpeed;
-    string TextureName;
-    string planetName;
+    public string planetDistance;
+    public string planetSize;
+    public string planetSpeed;
+    public string TextureName;
+    public string planetName;
 }
 
 
 [System.Serializable]
 public class systems
 {
-    string sunScale;
-    string sunName;
-    string sunTexture;
-    string sunVar;
-    string sunHbitat;
+    public string sunScale;
+    public string sunName;
+    public string sunTexture;
+    public string sunVar;
+    public string sunHbitat;
     public List<Planats> planet_list;
 }
 
