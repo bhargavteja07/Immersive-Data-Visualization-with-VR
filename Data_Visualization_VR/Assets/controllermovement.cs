@@ -21,14 +21,12 @@ public class controllermovement : MonoBehaviour
 
 	void Start()
 	{
-		Debug.Log ("Started controll.cs");
 		controller = gameObject.GetComponent<SteamVR_TrackedObject>();
 	}
 
 	// Update is called once per frame
 	void Update()
 	{
-		Debug.Log ("Update circle.cs");
 		device = SteamVR_Controller.Input((int)controller.index);
 		//If finger is on touchpad
 		if (device.GetTouch(SteamVR_Controller.ButtonMask.Touchpad))
