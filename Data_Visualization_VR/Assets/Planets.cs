@@ -307,7 +307,7 @@ public class Planets : MonoBehaviour {
 
         string path;
         string jsonString;
-        path = "C:\\Users\\srujan\\Documents\\GitHub\\Immersive-Data-Visualization-with-VR\\Data_Visualization_VR\\Assets\\Resources\\Planetary_system_information.json";
+        path = "Assets\\Resources\\Planetary_system_information.json";
         jsonString = File.ReadAllText(path);
         SystemList sl = JsonUtility.FromJson<SystemList>(jsonString);
         Debug.Log(sl);
