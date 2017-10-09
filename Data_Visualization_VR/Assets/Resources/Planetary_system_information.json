@@ -2,7 +2,7 @@
 	"Systems" :
 	[
 		{
-			"sunScale" : "695500",
+			"sunScale" : "1",
 			"sunName" :  "Our Sun",
 			"sunTexture" :  "sol",
 			"sunVar" :  "G2V" ,
@@ -10,65 +10,73 @@
 			"Planets" : 
 				[
 					{
-						"planetDistance" : "57910000",
+						"planetDistance" : "0.387",
 						"planetSize" :    "2440",    
-						"planetSpeed" :  "0.24",
+						"planetSpeed" :  "88",
 						"textureName" :  "mercury",
-						"planetName" :   "mercury" 
+						"planetName" :   "mercury", 
+						"planetMass" : "0"
 					},
 					{
-						"planetDistance" : "108200000",
+						"planetDistance" : "0.723",
 						"planetSize" :    "6052",    
-						"planetSpeed" :  "0.62", 
+						"planetSpeed" :  "224.7", 
 						"textureName" : "venus",   
-						"planetName" :  "venus"
+						"planetName" :  "venus", 
+						"planetMass" : "0"
 					},
 					{
-						"planetDistance" : "149600000",  
+						"planetDistance" : "1",  
 						"planetSize" :  "6371",    
-						"planetSpeed" :  "1.00", 
+						"planetSpeed" :  "365",
 						"textureName" : "earthmap", 
-						"planetName" :  "earth"
+						"planetName" :  "earth", 
+						"planetMass" : "0"
 					},
 					{
-						"planetDistance" : "227900000",  
+						"planetDistance" : "1.52",  
 						"planetSize" :    "3400",    
-						"planetSpeed" :  "1.88", 
+						"planetSpeed" :  "687", 
 						"textureName" :  "mars",     
-						"planetName" :   "mars"  
+						"planetName" :   "mars" , 
+						"planetMass" : "0" 
 					},
 					{
-						"planetDistance" : "778500000",
+						"planetDistance" : "5.2",
 						"planetSize" :    "69911",       
-						"planetSpeed" :  "11.86",  
+						"planetSpeed" :  "4329",  
 						"textureName" : "jupiter",    
-						"planetName" :  "jupiter"
+						"planetName" :  "jupiter", 
+						"planetMass" : "0"
 					},
 					{
-						"planetDistance" : "1433000000",   
+						"planetDistance" : "9.5",   
 						"planetSize" :  "58232",       
-						"planetSpeed" :  "29.46",  
+						"planetSpeed" :  "10759",  
 						"textureName" : "saturn",    
-						"planetName" :  "saturn"
+						"planetName" :  "saturn", 
+						"planetMass" : "0"
 					},
 					{
-						"planetDistance" : "2877000000", 
+						"planetDistance" : "19.218", 
 						"planetSize" :    "25362",       
-						"planetSpeed" :  "84.01", 
+						"planetSpeed" :  "30688", 
 						"textureName" :  "neptune", 
-						"planetName" :   "uranus"
+						"planetName" :   "uranus", 
+						"planetMass" : "0"
 					},
 					{
-						"planetDistance" : "4503000000", 
+						"planetDistance" : "30.11", 
 						"planetSize" :    "24622",      
-						"planetSpeed" :  "164.80",  
+						"planetSpeed" :  "60182",  
 						"textureName" : "uranus",    
-						"planetName" :  "neptune"
+						"planetName" :  "neptune", 
+						"planetMass" : "0"
 					}
 				]
 		},
 		{
-			"sunScale" : "556400", 
+			"sunScale" : "0.793", 
 			"sunName" : "Tau Ceti", 
 			"sunTexture" : "gstar", 
 			"sunVar" : "G8.5V" , 
@@ -76,44 +84,49 @@
 			"Planets" : 
 				[
 					{
-						"planetDistance" : "15707776",  
-						"planetSize" :  "9009",   
-						"planetSpeed" :  "0.04", 
+						"planetDistance" : "0.105",  
+						"planetSize" :  "0",   
+						"planetSpeed" :  "13.965", 
 						"textureName" : "venus",   
-						"planetName" :  "b"
+						"planetName" :  "b", 
+						"planetMass" : "2"
 					},
 					{
-						"planetDistance" : "29171585", 
-						"planetSize" :  "11217",   
-						"planetSpeed" :  "0.09", 
+						"planetDistance" : "0.195", 
+						"planetSize" :  "0",   
+						"planetSpeed" :  "35.362", 
 						"textureName" : "venus", 
-						"planetName" :  "c"
+						"planetName" :  "c", 
+						"planetMass" : "3.1"
 					},
 					{
-						"planetDistance" : "55949604", 
-						"planetSize" :  "12088",   
-						"planetSpeed" :  "0.26", 
+						"planetDistance" : "0.374", 
+						"planetSize" :  "0",   
+						"planetSpeed" :  "94.11", 
 						"textureName" : "mercury",  
-						"planetName" :  "d"
+						"planetName" :  "d", 
+						"planetMass" : "3.6"
 					},
 					{
-						"planetDistance" : "82578024", 
-						"planetSize" :  "13211",
-						"planetSpeed" :     "0.46", 
+						"planetDistance" : "0.552", 
+						"planetSize" :  "0",
+						"planetSpeed" :     "168.12", 
 						"textureName" : "mercury", 
-						"planetName" :  "e"
+						"planetName" :  "e", 
+						"planetMass" : "4.3"
 					},
 					{
-						"planetDistance" : "201957126",  
-						"planetSize" :  "16454",  
-						"planetSpeed" :   "1.75",
+						"planetDistance" : "1.35",  
+						"planetSize" :  "0",  
+						"planetSpeed" :   "642",
 						"textureName" :  "uranus",    
-						"planetName" :  "f"
+						"planetName" :  "f", 
+						"planetMass" : "6.6"
 					}
 				]
 		},
 		{
-			"sunScale" : "201750",
+			"sunScale" : "0.29",
 			"sunName" : "Gliese 581",
 			"sunTexture" : "mstar",
 			"sunVar" : "M3V" ,
@@ -121,25 +134,242 @@
 			"Planets" : 
 				[
 					{
-						"planetDistance" : "4188740",
-						"planetSize" :  "8919",
-						"planetSpeed" :  "0.009",
+						"planetDistance" : "0.281",
+						"planetSize" :  "0",
+						"planetSpeed" :  "3.1490",
 						"textureName" : "venus",
-						"planetName" :  "e"
+						"planetName" :  "e",
+						"planetMass" : "1.7"
 					},
 					{
-						"planetDistance" : "6133513",
-						"planetSize" :  "30554" ,
-						"planetSpeed" :  "0.014" ,
+						"planetDistance" : "0.0406",
+						"planetSize" :  "0" ,
+						"planetSpeed" :  "5.36" ,
 						"textureName" : "jupiter",
-						"planetName" :  "b"
+						"planetName" :  "b",
+						"planetMass" : "15.8"
 					},
 					{
-						"planetDistance" : "10920645",
-						"planetSize" :  "20147",
-						"planetSpeed" :  "0.18",
+						"planetDistance" : "0.072",
+						"planetSize" :  "0",
+						"planetSpeed" :  "13.91",
 						"textureName" : "neptune",
-						"planetName" :  "c"
+						"planetName" :  "c",
+						"planetMass" : "5.5"
+					}
+				]
+		},
+		{
+			"sunScale" : "1.27",
+			"sunName" : "HD 52265",
+			"sunTexture" : "mstar",
+			"sunVar" : "G0V",
+			"sunHabitat" : "2.08",
+			"Planets" : 
+				[
+					{
+						"planetDistance" : "0.504",
+						"planetSize" :  "0",
+						"planetSpeed" :  "119.2",
+						"textureName" : "venus",
+						"planetName" :  "b",
+						"planetMass" : "1.85"
+					}
+				]
+		},
+		{
+			"sunScale" : "1.04",
+			"sunName" : "Nu2 Lupi",
+			"sunTexture" : "mstar",
+			"sunVar" : "Lupus",
+			"sunHabitat" : "0.99",
+			"Planets" : 
+				[
+					{
+						"planetDistance" : "0.093",
+						"planetSize" :  "0",
+						"planetSpeed" :  "11.57",
+						"textureName" : "venus",
+						"planetName" :  "b",
+						"planetMass" : "5.28"
+					},
+					{
+						"planetDistance" : "0.16",
+						"planetSize" :  "0",
+						"planetSpeed" :  "27.58",
+						"textureName" : "venus",
+						"planetName" :  "c",
+						"planetMass" : "11.5"
+					},
+					{
+						"planetDistance" : "0.41",
+						"planetSize" :  "0",
+						"planetSpeed" :  "106.72",
+						"textureName" : "venus",
+						"planetName" :  "d",
+						"planetMass" : "9.6"
+					}
+				]
+		},
+		{
+			"sunScale" : ".86",
+			"sunName" : "14 Herculis",
+			"sunTexture" : "mstar",
+			"sunVar" : "Hercules",
+			"sunHabitat" : "0.62",
+			"Planets" : 
+				[
+					{
+						"planetDistance" : "2.77",
+						"planetSize" :  "0",
+						"planetSpeed" :  "1773",
+						"textureName" : "venus",
+						"planetName" :  "b",
+						"planetMass" : "4.64"
+					},
+					{
+						"planetDistance" : "6.9",
+						"planetSize" :  "0",
+						"planetSpeed" :  "6906",
+						"textureName" : "venus",
+						"planetName" :  "c",
+						"planetMass" : "2.1"
+					}
+				]
+		},
+		{
+			"sunScale" : "1.9",
+			"sunName" : "83 Leonis",
+			"sunTexture" : "mstar",
+			"sunVar" : "Leo",
+			"sunHabitat" : "0.41",
+			"Planets" : 
+				[
+					{
+						"planetDistance" : "0.12",
+						"planetSize" :  "0",
+						"planetSpeed" :  "17.05",
+						"textureName" : "venus",
+						"planetName" :  "b",
+						"planetMass" : "0.08"
+					},
+					{
+						"planetDistance" : "5.4",
+						"planetSize" :  "0",
+						"planetSpeed" :  "4970",
+						"textureName" : "venus",
+						"planetName" :  "c",
+						"planetMass" : "0.36"
+					}
+				]
+		},
+		{
+			"sunScale" : "1.25",
+			"sunName" : "23 Librae",
+			"sunTexture" : "mstar",
+			"sunVar" : "Libra",
+			"sunHabitat" : "0",
+			"Planets" : 
+				[
+					{
+						"planetDistance" : "0.81",
+						"planetSize" :  "0",
+						"planetSpeed" :  "258",
+						"textureName" : "jupiter",
+						"planetName" :  "b",
+						"planetMass" : "1.59"
+					},
+					{
+						"planetDistance" : "5.8",
+						"planetSize" :  "0",
+						"planetSpeed" :  "5000",
+						"textureName" : "jupiter",
+						"planetName" :  "c",
+						"planetMass" : "0.82"
+					}
+				]
+		},
+		{
+			"sunScale" : "0.17",
+			"sunName" : "Kepler 42",
+			"sunTexture" : "mstar",
+			"sunVar" : "Cygnus",
+			"sunHabitat" : "0.0024",
+			"Planets" : 
+				[
+					{
+						"planetDistance" : "0.006",
+						"planetSize" :  "4650",
+						"planetSpeed" :  "0.54",
+						"textureName" : "jupiter",
+						"planetName" :  "c",
+						"planetMass" : "0"
+					},
+					{
+						"planetDistance" : "0.01",
+						"planetSize" :  "4905",
+						"planetSpeed" :  "1.21",
+						"textureName" : "venus",
+						"planetName" :  "b",
+						"planetMass" : "0"
+					},
+					{
+						"planetDistance" : "0.015",
+						"planetSize" :  "3631",
+						"planetSpeed" :  "1.8",
+						"textureName" : "venus",
+						"planetName" :  "d",
+						"planetMass" : "0"
+					}
+				]
+		},
+		{
+			"sunScale" : "0.75",
+			"sunName" : "Kepler 444",
+			"sunTexture" : "mstar",
+			"sunVar" : "Lyra",
+			"sunHabitat" : "0",
+			"Planets" : 
+				[
+					{
+						"planetDistance" : "0.041",
+						"planetSize" :  "2548",
+						"planetSpeed" :  "3.6",
+						"textureName" : "venus",
+						"planetName" :  "b",
+						"planetMass" : "0"
+					},
+					{
+						"planetDistance" : "0.04",
+						"planetSize" :  "3185",
+						"planetSpeed" :  "4.5",
+						"textureName" : "venus",
+						"planetName" :  "c",
+						"planetMass" : "0"
+					},
+					{
+						"planetDistance" : "0.06",
+						"planetSize" :  "3376",
+						"planetSpeed" :  "6.1",
+						"textureName" : "venus",
+						"planetName" :  "d",
+						"planetMass" : "0"
+					},
+					{
+						"planetDistance" : "0.07",
+						"planetSize" :  "3440",
+						"planetSpeed" :  "7.7",
+						"textureName" : "venus",
+						"planetName" :  "e",
+						"planetMass" : "0"
+					},
+					{
+						"planetDistance" : "0.08",
+						"planetSize" :  "4714",
+						"planetSpeed" :  "9.7",
+						"textureName" : "venus",
+						"planetName" :  "f",
+						"planetMass" : "0"
 					}
 				]
 		}

@@ -57,23 +57,51 @@ public class Planets : MonoBehaviour {
 	void dealWithPlanets (string [,] planets, GameObject thesePlanets, GameObject theseOrbits){
 		GameObject newPlanetCenter;
 		GameObject newPlanet;
-
 		GameObject sunRelated;
-
 		Material planetMaterial;
-
 		int planetCounter;
-
 		for (planetCounter = 0; planetCounter < planets.GetLength(0); planetCounter++) {
 
 			float planetDistance = float.Parse (planets [planetCounter, 0]) / 149600000.0F * 10.0F;
-			float planetSize = float.Parse (planets [planetCounter, 1]) * 2.0F / 10000.0F;
+			float planetSize = float.Parse (planets [planetCounter, 1]);
 			float planetSpeed = -1.0F / float.Parse (planets [planetCounter, 2]) * revolutionSpeed;
 			string textureName = planets [planetCounter, 3];
 			string planetName = planets [planetCounter, 4];
+            string planetMass = planets[planetCounter, 5];
+            int earthRadius = 6371;
+            if(planetSize==0)
+            {
+                float mass = float.Parse(planetMass);
+                if ((0 < mass) && (mass <= 2))
+                {
+                    Debug.Log("im in <2");
+                    planetSize = ((5F / 8F) * mass) * earthRadius;
+                }
+                else if((2<mass)&&(mass<=5))
+                {
+                    planetSize = ((mass + 3) / 4) * earthRadius;
+                }
+                else if ((5 < mass) && (mass <= 10))
+                {
+                    planetSize = ((mass + 5) / 5) * earthRadius;
+                }
+                else if ((10 < mass) && (mass <= 30))
+                {
+                    planetSize = (((3*mass) + 30) / 20) * earthRadius;
+                }
+                else if ((30 < mass) && (mass <= 300))
+                {
+                    planetSize = ((mass + 150) / 3) * earthRadius;
+                }
+                else
+                {
+                    planetSize = mass * earthRadius / 20;
+                }
+                Debug.Log(planetName+ " --  "  +planetSize);
+            }
+            planetSize = planetSize * 2.0F / 10000.0F;
 
-
-			newPlanetCenter = new GameObject (planetName + "Center");
+            newPlanetCenter = new GameObject (planetName + "Center");
 			newPlanetCenter.AddComponent<rotate> ();
 
 			newPlanet = GameObject.CreatePrimitive (PrimitiveType.Sphere);
@@ -109,12 +137,43 @@ public class Planets : MonoBehaviour {
 		for (planetCounter = 0; planetCounter < planets.GetLength(0); planetCounter++) {
 
 			float planetDistance = float.Parse (planets [planetCounter, 0]) / 149600000.0F * 10.0F;
-			float planetSize = float.Parse (planets [planetCounter, 1]) * 1.0F / 10000.0F;
+			float planetSize = float.Parse (planets [planetCounter, 1]);
 			string textureName = planets [planetCounter, 3];
 			string planetName = planets [planetCounter, 4];
-		
-			// limit the planets to the width of the side view
-			if ((panelXScale * planetDistance) < panelWidth) {
+            string planetMass = planets[planetCounter, 5];
+            int earthRadius = 6371;
+            if (planetSize == 0)
+            {
+                float mass = float.Parse(planetMass);
+                if (mass <= 2)
+                {
+                    planetSize = ((5F / 8F) * mass) * earthRadius;
+                }
+                else if ((2 < mass) && (mass <= 5))
+                {
+                    planetSize = ((mass + 3) / 4) * earthRadius;
+                }
+                else if ((5 < mass) && (mass <= 10))
+                {
+                    planetSize = ((mass + 5) / 5) * earthRadius;
+                }
+                else if ((10 < mass) && (mass <= 30))
+                {
+                    planetSize = (((3 * mass) + 30) / 20) * earthRadius;
+                }
+                else if ((30 < mass) && (mass <= 300))
+                {
+                    planetSize = ((mass + 150) / 3) * earthRadius;
+                }
+                else
+                {
+                    planetSize = mass * earthRadius / 20;
+                }
+//                Debug.Log(planetSize);
+            }
+            planetSize = planetSize * 2.0F / 10000.0F;
+            // limit the planets to the width of the side view
+            if ((panelXScale * planetDistance) < panelWidth) {
 
 				newPlanet = GameObject.CreatePrimitive (PrimitiveType.Sphere);
 				newPlanet.name = planetName;
@@ -137,9 +196,7 @@ public class Planets : MonoBehaviour {
 		GameObject newSidePanel;
 		GameObject newSideSun;
 		GameObject sideSunText;
-
 		GameObject habZone;
-
 		Material sideSunMaterial, habMaterial;
 
 		newSidePanel = GameObject.CreatePrimitive (PrimitiveType.Cube);
@@ -304,6 +361,11 @@ public class Planets : MonoBehaviour {
 
 	void Start () {
 
+        int sunScaleRelative = 695500;
+        long austronamicalUnit = 149597870;
+        float year = 365;
+        int earth_mass = 1;
+        int earth_radius = 6371;  
         string path;
         string jsonString;
         path = "Assets/Resources/Planetary_system_information.json";
@@ -320,21 +382,22 @@ public class Planets : MonoBehaviour {
         for (int i=0;i<total_systems;i++)
         {
             int k = 0;
-            sol[k++] = sl.Systems[i].sunScale;
+            sol[k++] = (float.Parse(sl.Systems[i].sunScale) * sunScaleRelative).ToString();
             sol[k++] = sl.Systems[i].sunName;
             sol[k++] = sl.Systems[i].sunTexture;
             sol[k++] = sl.Systems[i].sunVar;
             sol[k++] = sl.Systems[i].sunHabitat;
             int planet_count = sl.Systems[i].Planets.Count;
-            string[,] planets = new string[planet_count,5];
+            string[,] planets = new string[planet_count,6];
             for(int j=0;j<planet_count;j++)
             {
                 k = 0;
-                planets[j,k++] = sl.Systems[i].Planets[j].planetDistance;
+                planets[j,k++] = (float.Parse(sl.Systems[i].Planets[j].planetDistance) * austronamicalUnit).ToString();
                 planets[j, k++] = sl.Systems[i].Planets[j].planetSize;
-                planets[j, k++] = sl.Systems[i].Planets[j].planetSpeed;
+                planets[j, k++] = (float.Parse(sl.Systems[i].Planets[j].planetSpeed) / year).ToString();
                 planets[j, k++] = sl.Systems[i].Planets[j].textureName;
                 planets[j, k++] = sl.Systems[i].Planets[j].planetName;
+                planets[j, k++] = sl.Systems[i].Planets[j].planetMass;
             }
             dealWithSystem(sol, planets, systemOffset, allCenter);
             systemOffset += oneOffset;
@@ -356,8 +419,8 @@ public class Planats
     public string planetSpeed;
     public string textureName;
     public string planetName;
+    public string planetMass;
 }
-
 
 [System.Serializable]
 public class systems
