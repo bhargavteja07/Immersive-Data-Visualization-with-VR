@@ -7,6 +7,8 @@
 			"sunTexture" :  "sol",
 			"sunVar" :  "G2V" ,
 			"sunHabitat" :  "1.0",
+			"lightYears":"0",
+			"discoveryMethod":"",
 			"Planets" : 
 				[
 					{
@@ -81,6 +83,8 @@
 			"sunTexture" : "gstar", 
 			"sunVar" : "G8.5V" , 
 			"sunHabitat" : "0.52",
+			"lightYears":"11.9",
+			"discoveryMethod":"Radial Velocity",
 			"Planets" : 
 				[
 					{
@@ -131,6 +135,8 @@
 			"sunTexture" : "mstar",
 			"sunVar" : "M3V" ,
 			"sunHabitat" : "0.013",
+			"lightYears":"20.4",
+			"discoveryMethod":"Radial Velocity",
 			"Planets" : 
 				[
 					{
@@ -165,6 +171,8 @@
 			"sunTexture" : "mstar",
 			"sunVar" : "G0V",
 			"sunHabitat" : "2.08",
+			"lightYears":"94",
+			"discoveryMethod":"Radial Velocity",
 			"Planets" : 
 				[
 					{
@@ -183,6 +191,8 @@
 			"sunTexture" : "mstar",
 			"sunVar" : "Lupus",
 			"sunHabitat" : "0.99",
+			"lightYears":"48.3",
+			"discoveryMethod":"Imaging",
 			"Planets" : 
 				[
 					{
@@ -217,6 +227,8 @@
 			"sunTexture" : "mstar",
 			"sunVar" : "Hercules",
 			"sunHabitat" : "0.62",
+			"lightYears":"57.3",
+			"discoveryMethod":"Radial Velocity",
 			"Planets" : 
 				[
 					{
@@ -243,6 +255,8 @@
 			"sunTexture" : "mstar",
 			"sunVar" : "Leo",
 			"sunHabitat" : "0.41",
+			"lightYears":"57.9",
+			"discoveryMethod":"Radial Velocity",
 			"Planets" : 
 				[
 					{
@@ -269,6 +283,8 @@
 			"sunTexture" : "mstar",
 			"sunVar" : "Libra",
 			"sunHabitat" : "0",
+			"lightYears":"85",
+			"discoveryMethod":"Radial Velocity",
 			"Planets" : 
 				[
 					{
@@ -295,6 +311,8 @@
 			"sunTexture" : "mstar",
 			"sunVar" : "Cygnus",
 			"sunHabitat" : "0.0024",
+			"lightYears":"126",
+			"discoveryMethod":"Transit",
 			"Planets" : 
 				[
 					{
@@ -329,6 +347,8 @@
 			"sunTexture" : "mstar",
 			"sunVar" : "Lyra",
 			"sunHabitat" : "0",
+			"lightYears":"117",
+			"discoveryMethod":"Transit",
 			"Planets" : 
 				[
 					{
