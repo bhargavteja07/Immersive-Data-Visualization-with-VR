@@ -14,6 +14,19 @@ public class DisplayNames : MonoBehaviour {
 	void Update () {
 		
 	}
+    private void OnTriggerEnter(Collider other)
+    {
+        if (disp)
+        {
+            text.GetComponent<Renderer>().enabled = false;
+            disp = false;
+        }
+        else
+        {
+            text.GetComponent<Renderer>().enabled = true;
+            disp = true;
+        }
+    }
     private void OnMouseDown()
     {
         if (disp)

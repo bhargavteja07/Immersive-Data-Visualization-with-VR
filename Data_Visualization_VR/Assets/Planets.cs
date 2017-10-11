@@ -31,6 +31,8 @@ public class Planets : MonoBehaviour
     public GameObject AllOrbits;
     public GameObject SunStuff;
     public GameObject Planets1;
+    public static bool menuDisplay = false;
+    public GameObject Menu;
     //------------------------------------------------------------------------------------//
 
     public void drawOrbit(string orbitName, float orbitRadius, Color orbitColor, float myWidth, GameObject myOrbits)
@@ -38,7 +40,6 @@ public class Planets : MonoBehaviour
 
         GameObject newOrbit;
         GameObject orbits;
-
 
         newOrbit = new GameObject(orbitName);
         newOrbit.AddComponent<Circle>();
@@ -188,6 +189,8 @@ public class Planets : MonoBehaviour
                 newPlanet.transform.position = new Vector3(-0.5F * panelWidth + planetDistance * panelXScale, 0, 0);
                 newPlanet.transform.localScale = new Vector3(planetSize, planetSize, 5.0F * panelDepth);
 
+                newPlanet.GetComponent<Collider>().isTrigger = true;
+
                 planetMaterial = new Material(Shader.Find("Standard"));
                 newPlanet.GetComponent<MeshRenderer>().material = planetMaterial;
                 planetMaterial.mainTexture = Resources.Load(textureName) as Texture;
@@ -260,6 +263,8 @@ public class Planets : MonoBehaviour
 
         newSideSun.GetComponent<Rigidbody>();
         newSideSun.AddComponent<GrabbableObject>();
+
+        newSideSun.GetComponent<Collider>().isTrigger = true;
 
         float innerHab = float.Parse(star[4]) * 9.5F;
         float outerHab = float.Parse(star[4]) * 14F;
@@ -424,6 +429,20 @@ public class Planets : MonoBehaviour
         SolarCenter.transform.position = offset;
     }
 
+    void menu()
+    {
+        Debug.Log("in menu");
+        if (menuDisplay)
+        {
+            Menu.GetComponent<MeshRenderer>().enabled = false;
+            menuDisplay = false;
+        }
+        else
+        {
+            Menu.GetComponent<MeshRenderer>().enabled = true;
+            menuDisplay = true;
+        }
+    }
     void Start()
     {
         allCenter = new GameObject();
@@ -463,12 +482,21 @@ public class Planets : MonoBehaviour
             systemOffset += oneOffset;
         }
         allCenter.transform.localScale = new Vector3(0.1F, 0.1F, 0.1F);
+        Vector3 v = new Vector3(0.5f, 0.5f, 5f);
+        Menu = GameObject.CreatePrimitive(PrimitiveType.Cube);
+        Menu.transform.position = GameObject.FindGameObjectWithTag("Working Camera").transform.position + v;
+        Menu.transform.localScale = new Vector3(1f, 3f, 1f);
+        Menu.transform.parent = GameObject.FindGameObjectWithTag("Working Camera").transform;
+        Menu.GetComponent<MeshRenderer>().enabled = false;
     }
-
-
     // Update is called once per frame
     void Update()
     {
+        bool isKeyPressed = Input.GetKeyDown(KeyCode.Space);
+        if (isKeyPressed)
+            menu();
+        if (SteamVR_Controller.Input(SteamVR_Controller.GetDeviceIndex(SteamVR_Controller.DeviceRelation.Leftmost)).GetHairTriggerDown())
+            menu();
     }
 }
 [System.Serializable]
