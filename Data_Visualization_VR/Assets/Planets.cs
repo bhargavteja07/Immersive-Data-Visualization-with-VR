@@ -255,6 +255,8 @@ public class Planets : MonoBehaviour
         newSideSun.GetComponent<Display3D>().sl = sl;
         newSideSun.GetComponent<Display3D>().go = allCenter;
 
+        newSideSun.GetComponent<Rigidbody>();
+        newSideSun.AddComponent<GrabbableObject>();
 
         float innerHab = float.Parse(star[4]) * 9.5F;
         float outerHab = float.Parse(star[4]) * 14F;
@@ -368,12 +370,12 @@ public class Planets : MonoBehaviour
         Planets1.transform.parent = SolarCenter.transform;
 
 
-//        if (k == 0)
-//        {
+        if (k == 0)
+        {
             dealWithStar(starInfo, SunStuff, AllOrbits);
             dealWithPlanets(planetInfo, Planets1, AllOrbits);
             k++;
-//        }
+        }
         // need to do this last
         SolarCenter.transform.position = offset;
 

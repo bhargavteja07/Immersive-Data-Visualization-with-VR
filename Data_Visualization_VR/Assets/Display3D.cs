@@ -52,7 +52,18 @@ public class Display3D : MonoBehaviour {
 //            Debug.Log("yo1");
             if (sol[1]==star_name)
             {
-//                Debug.Log("yo2");
+                //                Debug.Log("yo2");
+                Collider[] colliders;                
+                if ((colliders = Physics.OverlapSphere(oneOffset, 30f /* Radius */)).Length > 1) //Presuming the object you are testing also has a collider 0 otherwise
+                {
+                    foreach (var collider in colliders)
+                    {
+                        var go1 = collider.gameObject; //This is the game object you collided with
+                        if (go1 == gameObject)
+                            Destroy(go1);//Skip the object itself
+                                                        //Do something
+                    }
+                }
                 p.dealWithSystem_once(sol, planets, oneOffset, go);
 //                Debug.Log(go.name);
                 break;
