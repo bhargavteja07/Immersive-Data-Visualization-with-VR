@@ -6,7 +6,7 @@ public class Display3D : MonoBehaviour {
     public string star_name;
     public SystemList sl;
     public GameObject go;
-
+    public Vector3 oneOffset;
     Planets p;
 
 	// Use this for initialization
@@ -16,6 +16,37 @@ public class Display3D : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 	}
+    void deleteStar(GameObject go)
+    {
+        int total_systems = sl.Systems.Count;
+        string[] sol = new string[7];
+        for (int i = 0; i < total_systems; i++)
+        {
+            if (go.name == sl.Systems[i].sunName)
+            {
+                Debug.Log(go.name);
+                Destroy(go);
+                go.GetComponent<MeshRenderer>().enabled = false;
+                int planet_count = sl.Systems[i].Planets.Count;
+                for (int j = 0; j < planet_count; j++)
+                {
+                    GameObject g = GameObject.Find(sl.Systems[i].Planets[j].planetName);
+                    //                    Debug.Log(g.name);
+                    Destroy(g);
+                }
+            }
+        }
+        var v = new Vector3(0, 10F, 0);
+        Collider[] colliders;
+        if ((colliders = Physics.OverlapSphere(oneOffset + v, 0F /* Radius */)).Length > 1) //Presuming the object you are testing also has a collider 0 otherwise
+        {
+            foreach (var collider in colliders)
+            {
+                Destroy(collider.gameObject);
+
+            }
+        }
+    }
     private void OnMouseDown()
     {
         p = new Planets();
@@ -24,7 +55,8 @@ public class Display3D : MonoBehaviour {
         float year = 365;
         int earth_mass = 1;
         int earth_radius = 6371;
-        var oneOffset = new Vector3(0, -30, 0);
+        var systemOffset = new Vector3(0, 0f, 0);
+        oneOffset = new Vector3(0, -30f, 0);
         int total_systems = sl.Systems.Count;
         string[] sol = new string[7];
         for (int i = 0; i < total_systems; i++)
@@ -54,20 +86,22 @@ public class Display3D : MonoBehaviour {
             {
                 //                Debug.Log("yo2");
                 Collider[] colliders;                
-                if ((colliders = Physics.OverlapSphere(oneOffset, 30f /* Radius */)).Length > 1) //Presuming the object you are testing also has a collider 0 otherwise
+                if ((colliders = Physics.OverlapSphere(oneOffset, 0F /* Radius */)).Length > 1) //Presuming the object you are testing also has a collider 0 otherwise
                 {
                     foreach (var collider in colliders)
                     {
+                        
                         var go1 = collider.gameObject; //This is the game object you collided with
-                        if (go1 == gameObject)
-                            Destroy(go1);//Skip the object itself
-                                                        //Do something
+                        //Debug.Log(go1);
+                        deleteStar(go1);
                     }
                 }
-                p.dealWithSystem_once(sol, planets, oneOffset, go);
+                p.dealWithSystem_once(sol, planets,systemOffset+oneOffset, go);
 //                Debug.Log(go.name);
                 break;
             }
         }
     }
 }
+
+

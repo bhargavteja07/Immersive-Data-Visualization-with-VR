@@ -27,7 +27,10 @@ public class Planets : MonoBehaviour
     public static string jsonString = File.ReadAllText("Assets/Resources/Planetary_system_information.json");
     public SystemList sl = JsonUtility.FromJson<SystemList>(jsonString);
     public GameObject allCenter;
-
+    public GameObject SolarCenter;
+    public GameObject AllOrbits;
+    public GameObject SunStuff;
+    public GameObject Planets1;
     //------------------------------------------------------------------------------------//
 
     public void drawOrbit(string orbitName, float orbitRadius, Color orbitColor, float myWidth, GameObject myOrbits)
@@ -81,7 +84,7 @@ public class Planets : MonoBehaviour
                 float mass = float.Parse(planetMass);
                 if ((0 < mass) && (mass <= 2))
                 {
-                    Debug.Log("im in <2");
+//                    Debug.Log("im in <2");
                     planetSize = ((5F / 8F) * mass) * earthRadius;
                 }
                 else if ((2 < mass) && (mass <= 5))
@@ -104,7 +107,7 @@ public class Planets : MonoBehaviour
                 {
                     planetSize = mass * earthRadius / 20;
                 }
-                Debug.Log(planetName + " --  " + planetSize);
+//                Debug.Log(planetName + " --  " + planetSize);
             }
             planetSize = planetSize * 2.0F / 10000.0F;
 
@@ -143,7 +146,7 @@ public class Planets : MonoBehaviour
             float planetDistance = float.Parse(planets[planetCounter, 0]) / 149600000.0F * 10.0F;
             float planetSize = float.Parse(planets[planetCounter, 1]);
             string textureName = planets[planetCounter, 3];
-            string planetName = planets[planetCounter, 4];
+            string planetName = "Side"+planets[planetCounter, 4];
             string planetMass = planets[planetCounter, 5];
             int earthRadius = 6371;
             if (planetSize == 0)
@@ -398,11 +401,6 @@ public class Planets : MonoBehaviour
 
     public void dealWithSystem_once(string[] starInfo, string[,] planetInfo, Vector3 offset, GameObject allThings)
     {
-        GameObject SolarCenter;
-        GameObject AllOrbits;
-        GameObject SunStuff;
-        GameObject Planets1;
-
         SolarCenter = new GameObject();
         AllOrbits = new GameObject();
         SunStuff = new GameObject();
