@@ -469,7 +469,6 @@ public class Planets : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
     }
 }
 [System.Serializable]
