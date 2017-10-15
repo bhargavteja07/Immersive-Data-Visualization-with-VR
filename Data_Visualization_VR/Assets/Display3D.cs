@@ -115,7 +115,6 @@ public class Display3D : MonoBehaviour {
         float year = 365;
         int earth_mass = 1;
         int earth_radius = 6371;
-        var systemOffset = new Vector3(0, 0f, 0);
         oneOffset = new Vector3(0, (-30f*count), 0);
         int total_systems = sl.Systems.Count;
         string[] sol = new string[7];
@@ -156,7 +155,7 @@ public class Display3D : MonoBehaviour {
                         deleteStar(go1);
                     }
                 }
-                p.dealWithSystem_once(sol, planets,systemOffset+oneOffset, go);
+                p.dealWithSystem_once(sol, planets,oneOffset, go);
 //                Debug.Log(go.name);
                 break;
             }

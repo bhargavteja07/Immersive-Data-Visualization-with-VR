@@ -1,12 +1,1 @@
-﻿{
-  "orginalvalues": {
-    "rotation_speed": "0.5",
-    "planet_size": "0",
-    "distance": "0"
-  },
-  "changedvalues":{
-        "rotation_speed": "0.5",
-        "planet_size": "0",
-        "distance": "0"
-      }
-}
+{"orginalvalues":{"rotation_speed":"5","orbitXScale":"0","planetScaleFactor":"0"},"changedvalues":{"rotation_speed":"160","planet_size":"","planetScaleFactor":"0"}}

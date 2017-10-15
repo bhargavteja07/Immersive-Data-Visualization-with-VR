@@ -17,7 +17,7 @@ public class Planets : MonoBehaviour
     float orbitWidth = 0.01F;
     float habWidth = 0.03F;
 
-    float revolutionSpeed;
+    static float revolutionSpeed;
 
     float panelXScale = 2.0F;
     float orbitXScale = 2.0F;
@@ -38,8 +38,13 @@ public class Planets : MonoBehaviour
     public GameObject Planets1;
 
     public static bool menuDisplay = false;
+
+    public GameObject Save;
+    public GameObject SaveText;
+
     public GameObject Reset;
     public GameObject ResetText;
+
     public GameObject planetSize;
     public GameObject planetSizeText;
     public GameObject planetSizePlus;
@@ -98,6 +103,8 @@ public class Planets : MonoBehaviour
             float planetDistance = float.Parse(planets[planetCounter, 0]) / 149600000.0F * 10.0F;
             float planetSize = float.Parse(planets[planetCounter, 1]);
             float planetSpeed = -1.0F / float.Parse(planets[planetCounter, 2]) * revolutionSpeed;
+            Debug.Log("planetSpeed");
+            Debug.Log(revolutionSpeed);
             string textureName = planets[planetCounter, 3];
             string planetName = planets[planetCounter, 4] + (starNumber.ToString());
             string planetMass = planets[planetCounter, 5];
@@ -432,7 +439,6 @@ public class Planets : MonoBehaviour
         SolarSide = new GameObject();
         SolarSide.name = "Side View of" + starInfo[1];
 
-
         sideDealWithStar(starInfo, SolarSide, AllOrbits);
         sideDealWithPlanets(planetInfo, SolarSide, AllOrbits);
 
@@ -473,6 +479,8 @@ public class Planets : MonoBehaviour
         Debug.Log("in menu");
         if (menuDisplay)
         {
+            Save.GetComponent<MeshRenderer>().enabled = false;
+            SaveText.GetComponent<MeshRenderer>().enabled = false;
             Reset.GetComponent<MeshRenderer>().enabled = false;
             ResetText.GetComponent<MeshRenderer>().enabled = false;
 
@@ -480,7 +488,6 @@ public class Planets : MonoBehaviour
             planetSizeText.GetComponent<MeshRenderer>().enabled = false;
             planetSizePlus.GetComponent<MeshRenderer>().enabled = false;
             planetSizeMinus.GetComponent<MeshRenderer>().enabled = false;
-
 
             orbitSize.GetComponent<MeshRenderer>().enabled = false;
             orbitSizeText.GetComponent<MeshRenderer>().enabled = false;
@@ -496,6 +503,8 @@ public class Planets : MonoBehaviour
         }
         else
         {
+            Save.GetComponent<MeshRenderer>().enabled = true;
+            SaveText.GetComponent<MeshRenderer>().enabled = true;
             Reset.GetComponent<MeshRenderer>().enabled = true;
             ResetText.GetComponent<MeshRenderer>().enabled = true;
 
@@ -503,7 +512,6 @@ public class Planets : MonoBehaviour
             planetSizeText.GetComponent<MeshRenderer>().enabled = true;
             planetSizePlus.GetComponent<MeshRenderer>().enabled = true;
             planetSizeMinus.GetComponent<MeshRenderer>().enabled = true;
-
 
             orbitSize.GetComponent<MeshRenderer>().enabled = true;
             orbitSizeText.GetComponent<MeshRenderer>().enabled = true;
@@ -563,24 +571,27 @@ public class Planets : MonoBehaviour
 
     void createMenu()
     {
+        Save = GameObject.CreatePrimitive(PrimitiveType.Cube);
+        SaveText = new GameObject();
+        createButtons(Save, SaveText, "SAVE", 0);
+
         Reset = GameObject.CreatePrimitive(PrimitiveType.Cube);
         Reset.AddComponent<Reset>();
-        
         ResetText = new GameObject();
-        createButtons(Reset,ResetText,"RESET",0);
+        createButtons(Reset,ResetText,"RESET",0.13f);
       
         planetSize = GameObject.CreatePrimitive(PrimitiveType.Cube);
         planetSizeText = new GameObject();
         planetSizePlus = GameObject.CreatePrimitive(PrimitiveType.Cube);
         planetSizeMinus = GameObject.CreatePrimitive(PrimitiveType.Cube);
-        createButtons(planetSize, planetSizeText, "PLANET",0.13f);
+        createButtons(planetSize, planetSizeText, "PLANET",0.26f);
         createSmallButtons(planetSize,planetSizePlus,planetSizeMinus);
 
         orbitSize = GameObject.CreatePrimitive(PrimitiveType.Cube);
         orbitSizeText = new GameObject();
         orbitSizePlus = GameObject.CreatePrimitive(PrimitiveType.Cube);
         orbitSizeMinus = GameObject.CreatePrimitive(PrimitiveType.Cube);
-        createButtons(orbitSize, orbitSizeText, "ORBIT", 0.26f);
+        createButtons(orbitSize, orbitSizeText, "ORBIT", 0.39f);
         createSmallButtons(orbitSize,orbitSizePlus,orbitSizeMinus);
 
         speed = GameObject.CreatePrimitive(PrimitiveType.Cube);
@@ -591,7 +602,7 @@ public class Planets : MonoBehaviour
         speedPlus.GetComponent<SpeedIncrese>().sl = sl;
 
         speedMinus.AddComponent<SpeedDecrese>();
-        createButtons(speed, speedText, "SPEED", 0.39f);
+        createButtons(speed, speedText, "SPEED", 0.52f);
         createSmallButtons(speed, speedPlus, speedMinus);
     }
 
@@ -600,7 +611,7 @@ public class Planets : MonoBehaviour
         createMenu();
         k = Reset.GetComponent<Reset>().k;
         revolutionSpeed = float.Parse(val.changedvalues.rotation_speed);
-        Debug.Log(val.changedvalues.rotation_speed);
+//        Debug.Log(val.changedvalues.rotation_speed);
         allCenter = new GameObject();
         int sunScaleRelative = 695500;
         long austronamicalUnit = 149597870;
@@ -642,6 +653,7 @@ public class Planets : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        revolutionSpeed = float.Parse(val.changedvalues.rotation_speed);
         bool isKeyPressed = Input.GetKeyDown(KeyCode.Space);
         if (isKeyPressed)
             menu();
@@ -686,8 +698,8 @@ public class SystemList
 public class OrginalValues
 {
     public string rotation_speed;
-    public string planet_size;
-    public string distance;
+    public string orbitXScale;
+    public string planetScaleFactor;
 }
 
 [System.Serializable]
@@ -695,7 +707,7 @@ public class ChangedValues
 {
     public string rotation_speed;
     public string planet_size;
-    public string distance;
+    public string planetScaleFactor;
 }
 
 [System.Serializable]
