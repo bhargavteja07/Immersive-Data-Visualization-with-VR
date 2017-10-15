@@ -8,10 +8,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
 
-
 public class Planets : MonoBehaviour
 {
-
     float panelHeight = 0.1F;
     float panelWidth = 30.0F;
     float panelDepth = 0.1F;
@@ -19,20 +17,26 @@ public class Planets : MonoBehaviour
     float orbitWidth = 0.01F;
     float habWidth = 0.03F;
 
-    float revolutionSpeed = 0.2F;
+    float revolutionSpeed;
 
     float panelXScale = 2.0F;
     float orbitXScale = 2.0F;
     float innerHab;
     float outerHab;
+
     static int k = 0;
     public static string jsonString = File.ReadAllText("Assets/Resources/Planetary_system_information.json");
     public SystemList sl = JsonUtility.FromJson<SystemList>(jsonString);
+
+    public static string jsonString_values = File.ReadAllText("Assets/Resources/InputValues.json");
+    public jsonDct val = JsonUtility.FromJson<jsonDct>(jsonString_values);
+    
     public GameObject allCenter;
     public GameObject SolarCenter;
     public GameObject AllOrbits;
     public GameObject SunStuff;
     public GameObject Planets1;
+
     public static bool menuDisplay = false;
     public GameObject Reset;
     public GameObject ResetText;
@@ -384,7 +388,6 @@ public class Planets : MonoBehaviour
 
         sunText.transform.parent = sunRelated.transform;
 
-
         drawOrbit("Habitable Inner Ring", innerHab * orbitXScale, Color.green, habWidth, theseOrbits);
         drawOrbit("Habitable Outer Ring", outerHab * orbitXScale, Color.green, habWidth, theseOrbits);
     }
@@ -561,6 +564,8 @@ public class Planets : MonoBehaviour
     void createMenu()
     {
         Reset = GameObject.CreatePrimitive(PrimitiveType.Cube);
+        Reset.AddComponent<Reset>();
+        
         ResetText = new GameObject();
         createButtons(Reset,ResetText,"RESET",0);
       
@@ -584,6 +589,7 @@ public class Planets : MonoBehaviour
         speedMinus = GameObject.CreatePrimitive(PrimitiveType.Cube);
         speedPlus.AddComponent<SpeedIncrese>();
         speedPlus.GetComponent<SpeedIncrese>().sl = sl;
+
         speedMinus.AddComponent<SpeedDecrese>();
         createButtons(speed, speedText, "SPEED", 0.39f);
         createSmallButtons(speed, speedPlus, speedMinus);
@@ -591,6 +597,10 @@ public class Planets : MonoBehaviour
 
     void Start()
     {
+        createMenu();
+        k = Reset.GetComponent<Reset>().k;
+        revolutionSpeed = float.Parse(val.changedvalues.rotation_speed);
+        Debug.Log(val.changedvalues.rotation_speed);
         allCenter = new GameObject();
         int sunScaleRelative = 695500;
         long austronamicalUnit = 149597870;
@@ -628,7 +638,6 @@ public class Planets : MonoBehaviour
             systemOffset += oneOffset;
         }
         allCenter.transform.localScale = new Vector3(0.1F, 0.1F, 0.1F);
-        createMenu();
     }
     // Update is called once per frame
     void Update()
@@ -637,9 +646,10 @@ public class Planets : MonoBehaviour
         if (isKeyPressed)
             menu();
         //if (SteamVR_Controller.Input(SteamVR_Controller.GetDeviceIndex(SteamVR_Controller.DeviceRelation.Leftmost)).GetHairTriggerDown())
-          //  menu();
+        //  menu();
     }
 }
+
 [System.Serializable]
 public class Planats
 {
@@ -669,4 +679,28 @@ public class systems
 public class SystemList
 {
     public List<systems> Systems;
+}
+
+
+[System.Serializable]
+public class OrginalValues
+{
+    public string rotation_speed;
+    public string planet_size;
+    public string distance;
+}
+
+[System.Serializable]
+public class ChangedValues
+{
+    public string rotation_speed;
+    public string planet_size;
+    public string distance;
+}
+
+[System.Serializable]
+public class jsonDct
+{
+    public OrginalValues orginalvalues;
+    public ChangedValues changedvalues;
 }
