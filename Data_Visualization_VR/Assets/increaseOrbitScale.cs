@@ -45,11 +45,13 @@ public class increaseOrbitScale : MonoBehaviour {
 		float curOrbitScale = float.Parse (orbitScale);
 		float rescaledOrbitScale = curOrbitScale * 1.1F;
 
+		int j;
+		//For the top most system Solar
 
 		string sunName = sl.Systems [0].sunName;
 		GameObject sunMetaObj = GameObject.Find (sunName);
 		if (sunMetaObj != null) {
-			sunName = sunName + sunMetaObj.GetComponent<planetMeta> ().sunSuffix.ToString ();
+			sunName = sunName + "0";
 			GameObject orgSun =  GameObject.Find(sunName);
 			if (orgSun != null) {
 				float sunInHab = sunMetaObj.GetComponent<planetMeta> ().sunInnerHab;
@@ -65,14 +67,44 @@ public class increaseOrbitScale : MonoBehaviour {
 			}
 		}
 
+		int planetCount = sl.Systems [0].Planets.Count;
+		string planetName;
+		GameObject planetMetaObj;
+
+		for (j = 0; j < planetCount; j++) {
+			 planetName = sl.Systems [0].Planets [j].planetName + "1";
+			 planetMetaObj = GameObject.Find (planetName);
+			if (planetMetaObj != null) {
+				GameObject planet = GameObject.Find (planetName);
+				GameObject planetOrbit = GameObject.Find (planetName + " orbit");
+
+
+				float planetDist = planetMetaObj.GetComponent<planetMeta> ().planetDistance;
+				float planetSize = planetMetaObj.GetComponent<planetMeta> ().planetSize;
+
+
+				planetOrbit.GetComponent<Circle> ().xradius = planetDist * rescaledOrbitScale;
+				planetOrbit.GetComponent<Circle> ().yradius = planetDist * rescaledOrbitScale;
+				planetOrbit.GetComponent<Circle> ().init ();
+
+				planet.transform.localPosition = new Vector3 (0, 0, planetDist * rescaledOrbitScale);
+			}
+		}
+
+		//For the top most system Solar -----END
 
 
 		for (int i = 0; i < sysCount; i++) {
-			int planetCount = sl.Systems [i].Planets.Count;
+			planetCount = sl.Systems [i].Planets.Count;
 			sunName = sl.Systems [i].sunName + "compare";
-			sunMetaObj = GameObject.Find (sunName );
+			sunMetaObj = GameObject.Find (sunName);
+			int sunSuffix;
+			int planetSuffix;
 			if (sunMetaObj != null) {
-				sunName = sunName +sunMetaObj.GetComponent<planetMeta> ().sunSuffix.ToString ();
+				sunSuffix = sunMetaObj.GetComponent<planetMeta> ().sunSuffix;
+				planetSuffix = sunSuffix + 1;
+				sunName = sunName + sunMetaObj.GetComponent<planetMeta> ().sunSuffix.ToString ();
+
 				GameObject orgSun =  GameObject.Find(sunName);
 				if (orgSun != null) {
 					float sunInHab = sunMetaObj.GetComponent<planetMeta> ().sunInnerHab;
@@ -86,28 +118,30 @@ public class increaseOrbitScale : MonoBehaviour {
 					habIn.GetComponent<Circle> ().init ();
 					habOut.GetComponent<Circle> ().init ();
 				}
+				for (j = 0; j < planetCount; j++) {
+					planetName = sl.Systems [i].Planets [j].planetName + "compare" + planetSuffix.ToString();
+					planetMetaObj = GameObject.Find (planetName);
+					if (planetMetaObj != null) {
+						GameObject planet = GameObject.Find (planetName);
+						GameObject planetOrbit = GameObject.Find (planetName + " orbit");
+
+
+						float planetDist = planetMetaObj.GetComponent<planetMeta> ().planetDistance;
+						float planetSize = planetMetaObj.GetComponent<planetMeta> ().planetSize;
+
+
+						planetOrbit.GetComponent<Circle> ().xradius = planetDist  * rescaledOrbitScale;
+						planetOrbit.GetComponent<Circle> ().yradius = planetDist  * rescaledOrbitScale;
+						planetOrbit.GetComponent<Circle> ().init ();
+
+						planet.transform.localPosition = new Vector3 (0, 0, planetDist * rescaledOrbitScale);
+					}
+				}				
 			}
-			for (int j = 0; j < planetCount; j++) {
-				string planetName = sl.Systems [i].Planets [j].planetName;
-				GameObject planetMetaObj = GameObject.Find (planetName);
-				if (planetMetaObj != null) {
-					planetName = planetName + planetMetaObj.GetComponent<planetMeta> ().planetSuffixNumber.ToString ();
-					GameObject planet = GameObject.Find (planetName);
-					GameObject planetOrbit = GameObject.Find (planetName + " orbit");
 
 
-					float planetDist = planetMetaObj.GetComponent<planetMeta> ().planetDistance;
-					float planetSize = planetMetaObj.GetComponent<planetMeta> ().planetSize;
-
-
-					planetOrbit.GetComponent<Circle> ().xradius = planetDist  * rescaledOrbitScale;
-					planetOrbit.GetComponent<Circle> ().yradius = planetDist  * rescaledOrbitScale;
-					planetOrbit.GetComponent<Circle> ().init ();
-
-					planet.transform.localPosition = new Vector3 (0, 0, planetDist * rescaledOrbitScale);
-				}
-			}				
 		}
+
 		setOrbitXScale (rescaledOrbitScale);
 	}	
 

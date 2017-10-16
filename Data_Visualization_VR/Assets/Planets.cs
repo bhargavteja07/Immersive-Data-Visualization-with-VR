@@ -20,8 +20,6 @@ public class Planets : MonoBehaviour
     static float revolutionSpeed;
 
     float panelXScale = 2.0F;
-    float orbitXScale = 2.0F;
-	float planetScaleFactor = 1.0F;
     float innerHab;
     float outerHab;
 
@@ -29,8 +27,13 @@ public class Planets : MonoBehaviour
     public static string jsonString = File.ReadAllText("Assets/Resources/Planetary_system_information.json");
     public SystemList sl = JsonUtility.FromJson<SystemList>(jsonString);
 
+
     public static string jsonString_values = File.ReadAllText("Assets/Resources/InputValues.json");
     public jsonDct val = JsonUtility.FromJson<jsonDct>(jsonString_values);
+
+	float orbitXScale = 2.0F;
+	float planetScaleFactor = 1.0F;
+
     
     public GameObject allCenter;
     public GameObject SolarCenter;
@@ -154,11 +157,11 @@ public class Planets : MonoBehaviour
             newPlanet.transform.parent = newPlanetCenter.transform;
 
 
-			GameObject planetMetaObject = new GameObject(planets[planetCounter, 4]);
-			planetMetaObject.AddComponent<planetMeta>();
-			planetMetaObject.GetComponent<planetMeta> ().planetSuffixNumber = starNumber;
-			planetMetaObject.GetComponent<planetMeta> ().planetSize = planetSize;
-			planetMetaObject.GetComponent<planetMeta> ().planetDistance = planetDistance;
+			//GameObject planetMetaObject = new GameObject(planets[planetCounter, 4]);
+			newPlanet.AddComponent<planetMeta>();
+			newPlanet.GetComponent<planetMeta> ().planetSuffixNumber = starNumber;
+			newPlanet.GetComponent<planetMeta> ().planetSize = planetSize;
+			newPlanet.GetComponent<planetMeta> ().planetDistance = planetDistance;
 
 
             newPlanetCenter.GetComponent<rotate>().rotateSpeed = planetSpeed;
@@ -634,6 +637,10 @@ public class Planets : MonoBehaviour
 
     void Start()
     {
+
+	//	orbitXScale = float.Parse(val.changedvalues.orbitXScale);
+	//	planetScaleFactor = float.Parse(val.changedvalues.planetScaleFactor);
+		
         createMenu();
         k = Reset.GetComponent<Reset>().k;
         revolutionSpeed = float.Parse(val.changedvalues.rotation_speed);

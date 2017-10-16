@@ -44,20 +44,52 @@ public class decreasePlanetScale : MonoBehaviour {
 		string planetScale = getPlanetScaleFactor ();
 		float curPlanetScale = float.Parse (planetScale);
 		float rescaledPlanetScale = curPlanetScale / 1.1F;
+		int planetCount;
+		string planetName;
 
-		for (int i = 0; i < sysCount; i++) {
-			int planetCount = sl.Systems [i].Planets.Count;
+		//BASE CASE FOR SOLAR SYSTEM
+		GameObject sunMetaObj;
+		sunMetaObj = GameObject.Find (sl.Systems[0].sunName);
+		if (sunMetaObj != null) {
+			planetCount = sl.Systems [0].Planets.Count;
 			for (int j = 0; j < planetCount; j++) {
-				string planetName = sl.Systems [i].Planets [j].planetName;
+				planetName = sl.Systems [0].Planets [j].planetName + "1";
+
 				GameObject planetMetaObj = GameObject.Find (planetName);
 				if (planetMetaObj != null) {
-					planetName = planetName + planetMetaObj.GetComponent<planetMeta> ().planetSuffixNumber.ToString ();
+					planetName = planetName;
 					GameObject planet = GameObject.Find (planetName);
 
 					float planetSize = planetMetaObj.GetComponent<planetMeta> ().planetSize;
 
-					planet.transform.localScale = new Vector3 (planetSize*rescaledPlanetScale,planetSize*rescaledPlanetScale,planetSize*rescaledPlanetScale);
+					planet.transform.localScale = new Vector3 (planetSize * rescaledPlanetScale, planetSize * rescaledPlanetScale, planetSize * rescaledPlanetScale);
 				}
+			}
+		}
+
+		//BASE CASE FOR SOLAR SYSTEM ---ENDS
+
+
+		for (int i = 0; i < sysCount; i++) {
+			sunMetaObj = GameObject.Find (sl.Systems[i].sunName + "compare");
+			int sunSuffix;
+			int planetSuffix;
+			if (sunMetaObj != null) {
+				sunSuffix = sunMetaObj.GetComponent<planetMeta> ().sunSuffix;
+				planetSuffix = sunSuffix + 1;
+				planetCount = sl.Systems [i].Planets.Count;
+				for (int j = 0; j < planetCount; j++) {
+					planetName = sl.Systems [i].Planets [j].planetName + "compare" + planetSuffix.ToString();
+					GameObject planetMetaObj = GameObject.Find (planetName);
+					if (planetMetaObj != null) {
+						planetName = planetName;
+						GameObject planet = GameObject.Find (planetName);
+
+						float planetSize = planetMetaObj.GetComponent<planetMeta> ().planetSize;
+
+						planet.transform.localScale = new Vector3 (planetSize*rescaledPlanetScale,planetSize*rescaledPlanetScale,planetSize*rescaledPlanetScale);
+					}
+				}			
 			}				
 		}
 		setPlanetScaleFactor (rescaledPlanetScale);
