@@ -13,13 +13,16 @@ public class Circle : MonoBehaviour
 
 	void Start ()
 	{
-		line = gameObject.GetComponent<LineRenderer>();
+		init ();
+	}
 
+	public void init()
+	{
+		line = gameObject.GetComponent<LineRenderer>();
 		line.SetVertexCount (segments + 1);
 		line.useWorldSpace = false;
 		CreatePoints ();
 	}
-
 
 	void CreatePoints ()
 	{

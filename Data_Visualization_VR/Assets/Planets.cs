@@ -21,6 +21,7 @@ public class Planets : MonoBehaviour
 
     float panelXScale = 2.0F;
     float orbitXScale = 2.0F;
+	float planetScaleFactor = 1.0F;
     float innerHab;
     float outerHab;
 
@@ -149,8 +150,16 @@ public class Planets : MonoBehaviour
             newPlanet = GameObject.CreatePrimitive(PrimitiveType.Sphere);
             newPlanet.name = planetName;
             newPlanet.transform.position = new Vector3(0, 0, planetDistance * orbitXScale);
-            newPlanet.transform.localScale = new Vector3(planetSize, planetSize, planetSize);
+			newPlanet.transform.localScale = new Vector3(planetSize * planetScaleFactor, planetSize*planetScaleFactor, planetSize*planetScaleFactor);
             newPlanet.transform.parent = newPlanetCenter.transform;
+
+
+			GameObject planetMetaObject = new GameObject(planets[planetCounter, 4]);
+			planetMetaObject.AddComponent<planetMeta>();
+			planetMetaObject.GetComponent<planetMeta> ().planetSuffixNumber = starNumber;
+			planetMetaObject.GetComponent<planetMeta> ().planetSize = planetSize;
+			planetMetaObject.GetComponent<planetMeta> ().planetDistance = planetDistance;
+
 
             newPlanetCenter.GetComponent<rotate>().rotateSpeed = planetSpeed;
             
@@ -348,6 +357,13 @@ public class Planets : MonoBehaviour
         innerHab = float.Parse(star[4]) * 9.5F;
         outerHab = float.Parse(star[4]) * 14F;
 
+		GameObject sunMeta = new GameObject (star [1]);
+
+		sunMeta.AddComponent<planetMeta> ();
+		sunMeta.GetComponent<planetMeta> ().sunSuffix = starNumber;
+		sunMeta.GetComponent<planetMeta> ().sunInnerHab = innerHab;
+		sunMeta.GetComponent<planetMeta> ().sunOuterHab = outerHab;
+
 
         newSun = GameObject.CreatePrimitive(PrimitiveType.Sphere);
         newSun.AddComponent<rotate>();
@@ -355,6 +371,7 @@ public class Planets : MonoBehaviour
         starNumber++;
         newSun.transform.position = new Vector3(0, 0, 0);
         newSun.transform.localScale = new Vector3(centerSunSize, centerSunSize, centerSunSize);
+
 
         sunRelated = thisStar;
 
@@ -395,8 +412,8 @@ public class Planets : MonoBehaviour
 
         sunText.transform.parent = sunRelated.transform;
 
-        drawOrbit("Habitable Inner Ring", innerHab * orbitXScale, Color.green, habWidth, theseOrbits);
-        drawOrbit("Habitable Outer Ring", outerHab * orbitXScale, Color.green, habWidth, theseOrbits);
+		drawOrbit(newSun.name+"Habitable Inner Ring", innerHab * orbitXScale, Color.green, habWidth, theseOrbits);
+		drawOrbit(newSun.name+"Habitable Outer Ring", outerHab * orbitXScale, Color.green, habWidth, theseOrbits);
     }
 
     //------------------------------------------------------------------------------------//
@@ -586,6 +603,11 @@ public class Planets : MonoBehaviour
         planetSizeMinus = GameObject.CreatePrimitive(PrimitiveType.Cube);
         createButtons(planetSize, planetSizeText, "PLANET",0.26f);
         createSmallButtons(planetSize,planetSizePlus,planetSizeMinus);
+		planetSizePlus.AddComponent<increasePlanetScale>();
+		planetSizePlus.GetComponent<increasePlanetScale> ().sl = sl;
+		planetSizeMinus.AddComponent<decreasePlanetScale>();
+		planetSizeMinus.GetComponent<decreasePlanetScale> ().sl = sl;
+
 
         orbitSize = GameObject.CreatePrimitive(PrimitiveType.Cube);
         orbitSizeText = new GameObject();
@@ -593,6 +615,10 @@ public class Planets : MonoBehaviour
         orbitSizeMinus = GameObject.CreatePrimitive(PrimitiveType.Cube);
         createButtons(orbitSize, orbitSizeText, "ORBIT", 0.39f);
         createSmallButtons(orbitSize,orbitSizePlus,orbitSizeMinus);
+		orbitSizePlus.AddComponent<increaseOrbitScale>();
+		orbitSizePlus.GetComponent<increaseOrbitScale> ().sl = sl;
+		orbitSizeMinus.AddComponent<decreaseOrbitScale>();
+		orbitSizeMinus.GetComponent<decreaseOrbitScale> ().sl = sl;
 
         speed = GameObject.CreatePrimitive(PrimitiveType.Cube);
         speedText = new GameObject();
@@ -706,8 +732,8 @@ public class OrginalValues
 public class ChangedValues
 {
     public string rotation_speed;
-    public string planet_size;
-    public string planetScaleFactor;
+	public string orbitXScale;
+	public string planetScaleFactor;
 }
 
 [System.Serializable]
