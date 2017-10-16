@@ -39,7 +39,6 @@ public class increasePlanetScale : MonoBehaviour {
 
 	private void OnMouseDown()
 	{
-
 		int sysCount = sl.Systems.Count;
 		string planetScale = getPlanetScaleFactor ();
 		float curPlanetScale = float.Parse (planetScale);
@@ -47,12 +46,43 @@ public class increasePlanetScale : MonoBehaviour {
 		int planetCount;
 		string planetName;
 
+
+
+
+
+		/*Side Planet Scale ----START*/
+
+
+		int sideStarNum = 0,i,j;
+
+		GameObject hab = GameObject.Find ("Hab");
+
+
+		for (i = 0; i < sl.Systems.Count; i++) {			
+			int sidePCount = sl.Systems [i].Planets.Count;
+
+			for (j = 0; j < sidePCount; j++) {
+				string sidePName = "Side" + sl.Systems [i].Planets [j].planetName + sideStarNum.ToString ();
+				GameObject sidePlanet = GameObject.Find (sidePName);
+				if (sidePlanet != null) {
+					float sidePSize = sidePlanet.GetComponent<planetMeta> ().planetSize;
+					sidePlanet.transform.localScale = new Vector3(sidePSize*rescaledPlanetScale, sidePSize*rescaledPlanetScale, 5.0F * 0.1F *rescaledPlanetScale);
+
+				}
+			}
+			sideStarNum++;
+		}
+
+
+
+		/*Side Planet Scale ----END*/
+
 		//BASE CASE FOR SOLAR SYSTEM
 		GameObject sunMetaObj;
 		sunMetaObj = GameObject.Find (sl.Systems[0].sunName);
 		if (sunMetaObj != null) {
 		    planetCount = sl.Systems [0].Planets.Count;
-			for (int j = 0; j < planetCount; j++) {
+			for (j = 0; j < planetCount; j++) {
 				planetName = sl.Systems [0].Planets [j].planetName + "1";
 
 				GameObject planetMetaObj = GameObject.Find (planetName);
@@ -70,7 +100,7 @@ public class increasePlanetScale : MonoBehaviour {
 		//BASE CASE FOR SOLAR SYSTEM ---ENDS
 
 
-		for (int i = 0; i < sysCount; i++) {
+		for ( i = 0; i < sysCount; i++) {
 		    sunMetaObj = GameObject.Find (sl.Systems[i].sunName + "compare");
 			int sunSuffix;
 			int planetSuffix;
@@ -78,7 +108,7 @@ public class increasePlanetScale : MonoBehaviour {
 				sunSuffix = sunMetaObj.GetComponent<planetMeta> ().sunSuffix;
 				planetSuffix = sunSuffix + 1;
 				planetCount = sl.Systems [i].Planets.Count;
-				for (int j = 0; j < planetCount; j++) {
+				for ( j = 0; j < planetCount; j++) {
 					planetName = sl.Systems [i].Planets [j].planetName + "compare" + planetSuffix.ToString();
 					GameObject planetMetaObj = GameObject.Find (planetName);
 					if (planetMetaObj != null) {

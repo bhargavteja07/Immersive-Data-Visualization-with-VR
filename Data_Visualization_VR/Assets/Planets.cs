@@ -64,6 +64,7 @@ public class Planets : MonoBehaviour
     public GameObject speedPlus;
     public GameObject speedMinus;
     public static int starNumber = 0;
+	public static int sideStarNumber = 0;
     //------------------------------------------------------------------------------------//
 
     public void drawOrbit(string orbitName, float orbitRadius, Color orbitColor, float myWidth, GameObject myOrbits)
@@ -205,7 +206,7 @@ public class Planets : MonoBehaviour
             float planetDistance = float.Parse(planets[planetCounter, 0]) / 149600000.0F * 10.0F;
             float planetSize = float.Parse(planets[planetCounter, 1]);
             string textureName = planets[planetCounter, 3];
-            string planetName = "Side"+planets[planetCounter, 4];
+			string planetName = "Side"+planets[planetCounter, 4] + sideStarNumber.ToString();
             string planetMass = planets[planetCounter, 5];
             int earthRadius = 6371;
             if (planetSize == 0)
@@ -245,7 +246,12 @@ public class Planets : MonoBehaviour
                 newPlanet = GameObject.CreatePrimitive(PrimitiveType.Sphere);
                 newPlanet.name = planetName;
                 newPlanet.transform.position = new Vector3(-0.5F * panelWidth + planetDistance * panelXScale, 0, 0);
-                newPlanet.transform.localScale = new Vector3(planetSize, planetSize, 5.0F * panelDepth);
+				newPlanet.transform.localScale = new Vector3(planetSize*planetScaleFactor, planetSize*planetScaleFactor, 5.0F * panelDepth * planetScaleFactor);
+
+
+				newPlanet.AddComponent<planetMeta> ();
+				newPlanet.GetComponent<planetMeta> ().planetSize = planetSize;
+				newPlanet.GetComponent<planetMeta> ().planetDistance = planetDistance;
 
                 newPlanet.GetComponent<Collider>().isTrigger = true;
 
@@ -272,6 +278,8 @@ public class Planets : MonoBehaviour
 
             }
         }
+		sideStarNumber++;
+
     }
 
     //------------------------------------------------------------------------------------//
@@ -295,6 +303,8 @@ public class Planets : MonoBehaviour
         newSideSun.transform.position = new Vector3(-0.5F * panelWidth - 0.5F, 0, 0);
         newSideSun.transform.localScale = new Vector3(1.0F, panelHeight * 40.0F, 2.0F * panelDepth);
         newSideSun.transform.parent = thisSide.transform;
+
+
 
         sideSunMaterial = new Material(Shader.Find("Unlit/Texture"));
         newSideSun.GetComponent<MeshRenderer>().material = sideSunMaterial;
@@ -328,10 +338,15 @@ public class Planets : MonoBehaviour
         float outerHab = float.Parse(star[4]) * 14F;
 
 
+		newSideSun.AddComponent<planetMeta> ();
+		newSideSun.GetComponent<planetMeta> ().sunInnerHab = innerHab;
+		newSideSun.GetComponent<planetMeta> ().sunOuterHab = outerHab;
+
+
         // need to take panelXScale into account for the hab zone
 
         habZone = GameObject.CreatePrimitive(PrimitiveType.Cube);
-        habZone.name = "Hab";
+		habZone.name = "Hab" + star[1];
         habZone.transform.position = new Vector3((-0.5F * panelWidth) + ((innerHab + outerHab) * 0.5F * panelXScale), 0, 0);
         habZone.transform.localScale = new Vector3((outerHab - innerHab) * panelXScale, 40.0F * panelHeight, 2.0F * panelDepth);
         habZone.transform.parent = thisSide.transform;

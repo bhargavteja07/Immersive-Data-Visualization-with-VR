@@ -45,9 +45,46 @@ public class decreaseOrbitScale : MonoBehaviour {
 		float curOrbitScale = float.Parse (orbitScale);
 		float rescaledOrbitScale = curOrbitScale / 1.1F;
 
-		int j;
-		//For the top most system Solar
+		int i,j;
 
+
+
+
+		/*SIDE PLANETS ORBIT SCALE   ---START---- */
+
+		int sideStarNum = 0;
+
+		GameObject hab = GameObject.Find ("Hab");
+
+
+		for (i = 0; i < sl.Systems.Count; i++) {			
+			int sidePCount = sl.Systems [i].Planets.Count;
+
+			for (j = 0; j < sidePCount; j++) {
+				string sidePName = "Side" + sl.Systems [i].Planets [j].planetName + sideStarNum.ToString ();
+				GameObject sidePlanet = GameObject.Find (sidePName);
+				if (sidePlanet != null) {
+					float sidePSize = sidePlanet.GetComponent<planetMeta> ().planetSize;
+					float sidePDist = sidePlanet.GetComponent<planetMeta> ().planetDistance;
+					sidePlanet.transform.localPosition = new Vector3(-0.5F * 30.0F + sidePDist * rescaledOrbitScale, 0, 0);
+
+
+				}
+				GameObject sunMeta = GameObject.Find ("Side " + sl.Systems [i].sunName + " Star");
+				float innerHab = sunMeta.GetComponent<planetMeta> ().sunInnerHab;
+				float outerHab = sunMeta.GetComponent<planetMeta> ().sunOuterHab;
+
+				GameObject habZone;
+				habZone = GameObject.Find("Hab"+sl.Systems[i].sunName);
+				habZone.transform.localPosition = new Vector3((-0.5F * 30.0F) + ((innerHab + outerHab) * 0.5F * rescaledOrbitScale), 0, 0);
+				habZone.transform.localScale = new Vector3((outerHab - innerHab) * rescaledOrbitScale, 40.0F * .1F, 2.0F * .1F);
+			}
+			sideStarNum++;
+		}
+
+		/*SIDE PLANETS ORBIT SCALE   ---END---- */
+
+		//For the top most system Solar
 		string sunName = sl.Systems [0].sunName;
 		GameObject sunMetaObj = GameObject.Find (sunName);
 		if (sunMetaObj != null) {
@@ -94,7 +131,7 @@ public class decreaseOrbitScale : MonoBehaviour {
 		//For the top most system Solar -----END
 
 
-		for (int i = 0; i < sysCount; i++) {
+		for (i = 0; i < sysCount; i++) {
 			planetCount = sl.Systems [i].Planets.Count;
 			sunName = sl.Systems [i].sunName + "compare";
 			sunMetaObj = GameObject.Find (sunName);
