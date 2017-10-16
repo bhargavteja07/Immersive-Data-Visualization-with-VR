@@ -7,6 +7,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
+using LitJson;
 
 public class Planets : MonoBehaviour
 {
@@ -21,6 +22,8 @@ public class Planets : MonoBehaviour
 
     float panelXScale = 2.0F;
     float orbitXScale = 2.0F;
+    float planetScaleFactor = 1.0F;
+
     float innerHab;
     float outerHab;
 
@@ -103,8 +106,8 @@ public class Planets : MonoBehaviour
             float planetDistance = float.Parse(planets[planetCounter, 0]) / 149600000.0F * 10.0F;
             float planetSize = float.Parse(planets[planetCounter, 1]);
             float planetSpeed = -1.0F / float.Parse(planets[planetCounter, 2]) * revolutionSpeed;
-            Debug.Log("planetSpeed");
-            Debug.Log(revolutionSpeed);
+            //Debug.Log("planetSpeed");
+            //Debug.Log(revolutionSpeed);
             string textureName = planets[planetCounter, 3];
             string planetName = planets[planetCounter, 4] + (starNumber.ToString());
             string planetMass = planets[planetCounter, 5];
@@ -149,8 +152,14 @@ public class Planets : MonoBehaviour
             newPlanet = GameObject.CreatePrimitive(PrimitiveType.Sphere);
             newPlanet.name = planetName;
             newPlanet.transform.position = new Vector3(0, 0, planetDistance * orbitXScale);
-            newPlanet.transform.localScale = new Vector3(planetSize, planetSize, planetSize);
+            newPlanet.transform.localScale = new Vector3(planetSize * planetScaleFactor, planetSize * planetScaleFactor, planetSize * planetScaleFactor);
             newPlanet.transform.parent = newPlanetCenter.transform;
+
+            GameObject planetMetaObject = new GameObject(planets[planetCounter, 4]);
+            planetMetaObject.AddComponent<planetMeta>();
+            planetMetaObject.GetComponent<planetMeta>().planetSuffixNumber = starNumber;
+            planetMetaObject.GetComponent<planetMeta>().planetSize = planetSize;
+            planetMetaObject.GetComponent<planetMeta>().planetDistance = planetDistance;
 
             newPlanetCenter.GetComponent<rotate>().rotateSpeed = planetSpeed;
             
@@ -166,7 +175,7 @@ public class Planets : MonoBehaviour
             planetSize = planetSize * 10000.0F / 2.0F;
             if (planetSize / earthRadius <= 1.5)
             {
-                Debug.Log(innerHab + "   " + outerHab+"   "+planetName +"   "+planetDistance);
+                //Debug.Log(innerHab + "   " + outerHab+"   "+planetName +"   "+planetDistance);
                 if ((innerHab < planetDistance) && (outerHab > planetDistance))
                 {
                     AudioSource water = newPlanet.AddComponent<AudioSource>();
@@ -229,7 +238,6 @@ public class Planets : MonoBehaviour
             // limit the planets to the width of the side view
             if ((panelXScale * planetDistance) < panelWidth)
             {
-
                 newPlanet = GameObject.CreatePrimitive(PrimitiveType.Sphere);
                 newPlanet.name = planetName;
                 newPlanet.transform.position = new Vector3(-0.5F * panelWidth + planetDistance * panelXScale, 0, 0);
@@ -270,6 +278,7 @@ public class Planets : MonoBehaviour
         GameObject newSideSun;
         GameObject sideSunText;
         GameObject habZone;
+        GameObject Swap;
         Material sideSunMaterial, habMaterial;
 
         newSidePanel = GameObject.CreatePrimitive(PrimitiveType.Cube);
@@ -283,7 +292,7 @@ public class Planets : MonoBehaviour
         newSideSun.transform.position = new Vector3(-0.5F * panelWidth - 0.5F, 0, 0);
         newSideSun.transform.localScale = new Vector3(1.0F, panelHeight * 40.0F, 2.0F * panelDepth);
         newSideSun.transform.parent = thisSide.transform;
-
+        
         sideSunMaterial = new Material(Shader.Find("Unlit/Texture"));
         newSideSun.GetComponent<MeshRenderer>().material = sideSunMaterial;
         sideSunMaterial.mainTexture = Resources.Load(star[2]) as Texture;
@@ -306,16 +315,12 @@ public class Planets : MonoBehaviour
         newSideSun.GetComponent<Display3D>().star_name = star[1];
         newSideSun.GetComponent<Display3D>().sl = sl;
         newSideSun.GetComponent<Display3D>().go = allCenter;
-
-        newSideSun.GetComponent<Rigidbody>();
-        newSideSun.AddComponent<GrabbableObject>();
-
+        
         newSideSun.GetComponent<Collider>().isTrigger = true;
 
         float innerHab = float.Parse(star[4]) * 9.5F;
         float outerHab = float.Parse(star[4]) * 14F;
-
-
+        
         // need to take panelXScale into account for the hab zone
 
         habZone = GameObject.CreatePrimitive(PrimitiveType.Cube);
@@ -348,6 +353,12 @@ public class Planets : MonoBehaviour
         innerHab = float.Parse(star[4]) * 9.5F;
         outerHab = float.Parse(star[4]) * 14F;
 
+
+        GameObject sunMeta = new GameObject(star[1]);
+        sunMeta.AddComponent<planetMeta>();
+        sunMeta.GetComponent<planetMeta>().sunSuffix = starNumber;
+        sunMeta.GetComponent<planetMeta>().sunInnerHab = innerHab;
+        sunMeta.GetComponent<planetMeta>().sunOuterHab = outerHab;
 
         newSun = GameObject.CreatePrimitive(PrimitiveType.Sphere);
         newSun.AddComponent<rotate>();
@@ -386,7 +397,7 @@ public class Planets : MonoBehaviour
 
 
         sunText = new GameObject();
-        sunText.name = "Star Name";
+        sunText.name = newSun.name+" text";
         sunText.transform.position = new Vector3(0, 5, 0);
         sunText.transform.localScale = new Vector3(0.1F, 0.1F, 0.1F);
         var sunTextMesh = sunText.AddComponent<TextMesh>();
@@ -395,8 +406,8 @@ public class Planets : MonoBehaviour
 
         sunText.transform.parent = sunRelated.transform;
 
-        drawOrbit("Habitable Inner Ring", innerHab * orbitXScale, Color.green, habWidth, theseOrbits);
-        drawOrbit("Habitable Outer Ring", outerHab * orbitXScale, Color.green, habWidth, theseOrbits);
+        drawOrbit(newSun.name + "Habitable Inner Ring", innerHab * orbitXScale, Color.green, habWidth, theseOrbits);
+        drawOrbit(newSun.name + "Habitable Outer Ring", outerHab * orbitXScale, Color.green, habWidth, theseOrbits);
     }
 
     //------------------------------------------------------------------------------------//
@@ -407,13 +418,14 @@ public class Planets : MonoBehaviour
         GameObject AllOrbits;
         GameObject SunStuff;
         GameObject Planets1;
+        GameObject Swap;
 
         SolarCenter = new GameObject();
         AllOrbits = new GameObject();
         SunStuff = new GameObject();
         Planets1 = new GameObject();
 
-        SolarCenter.name = "SolarCenter" + " " + starInfo[1];
+        SolarCenter.name = "SolarCenter" + " " + starInfo[1]+starNumber.ToString();
         AllOrbits.name = "All Orbits" + " " + starInfo[1];
         SunStuff.name = "Sun Stuff" + " " + starInfo[1];
         Planets1.name = "Planets" + " " + starInfo[1];
@@ -439,6 +451,15 @@ public class Planets : MonoBehaviour
         SolarSide = new GameObject();
         SolarSide.name = "Side View of" + starInfo[1];
 
+        Swap = GameObject.CreatePrimitive(PrimitiveType.Cube);
+        Vector3 v = new Vector3(-17f, 1.5f, 0f);
+        Swap.transform.position = SolarSide.transform.position + v;
+        Swap.transform.localScale = new Vector3(1f, 1f, 0.1f);
+        Swap.name = SolarSide.name + "swap";
+        Swap.transform.parent = SolarSide.transform;
+        Swap.AddComponent<Swapping>();
+        Swap.GetComponent<Swapping>().swapname = SolarSide.name;
+
         sideDealWithStar(starInfo, SolarSide, AllOrbits);
         sideDealWithPlanets(planetInfo, SolarSide, AllOrbits);
 
@@ -456,7 +477,7 @@ public class Planets : MonoBehaviour
         SunStuff = new GameObject();
         Planets1 = new GameObject();
 
-        SolarCenter.name = "SolarCenter" + " " + starInfo[1];
+        SolarCenter.name = "SolarCenter" + " " + starInfo[1] + starNumber.ToString();
         AllOrbits.name = "All Orbits" + " " + starInfo[1];
         SunStuff.name = "Sun Stuff" + " " + starInfo[1];
         Planets1.name = "Planets" + " " + starInfo[1];
@@ -586,6 +607,10 @@ public class Planets : MonoBehaviour
         planetSizeMinus = GameObject.CreatePrimitive(PrimitiveType.Cube);
         createButtons(planetSize, planetSizeText, "PLANET",0.26f);
         createSmallButtons(planetSize,planetSizePlus,planetSizeMinus);
+        planetSizePlus.AddComponent<increasePlanetScale>();
+        planetSizePlus.GetComponent<increasePlanetScale>().sl = sl;
+        planetSizeMinus.AddComponent<decreasePlanetScale>();
+        planetSizeMinus.GetComponent<decreasePlanetScale>().sl = sl;
 
         orbitSize = GameObject.CreatePrimitive(PrimitiveType.Cube);
         orbitSizeText = new GameObject();
@@ -593,7 +618,10 @@ public class Planets : MonoBehaviour
         orbitSizeMinus = GameObject.CreatePrimitive(PrimitiveType.Cube);
         createButtons(orbitSize, orbitSizeText, "ORBIT", 0.39f);
         createSmallButtons(orbitSize,orbitSizePlus,orbitSizeMinus);
-
+        orbitSizePlus.AddComponent<increaseOrbitScale>();
+        orbitSizePlus.GetComponent<increaseOrbitScale>().sl = sl;
+        orbitSizeMinus.AddComponent<decreaseOrbitScale>();
+        orbitSizeMinus.GetComponent<decreaseOrbitScale>().sl = sl;
         speed = GameObject.CreatePrimitive(PrimitiveType.Cube);
         speedText = new GameObject();
         speedPlus = GameObject.CreatePrimitive(PrimitiveType.Cube);
@@ -610,8 +638,8 @@ public class Planets : MonoBehaviour
     {
         createMenu();
         k = Reset.GetComponent<Reset>().k;
-        revolutionSpeed = float.Parse(val.changedvalues.rotation_speed);
-//        Debug.Log(val.changedvalues.rotation_speed);
+        revolutionSpeed = float.Parse(val.orginalvalues.rotation_speed);
+        Debug.Log(revolutionSpeed);
         allCenter = new GameObject();
         int sunScaleRelative = 695500;
         long austronamicalUnit = 149597870;
@@ -706,7 +734,7 @@ public class OrginalValues
 public class ChangedValues
 {
     public string rotation_speed;
-    public string planet_size;
+    public string orbitXScale;
     public string planetScaleFactor;
 }
 
