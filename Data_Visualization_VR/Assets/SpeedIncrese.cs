@@ -8,7 +8,6 @@ using System.IO;
 
 public class SpeedIncrese : MonoBehaviour {
     public SystemList sl;
-    int k = 0;
 
     // Use this for initialization
     void Start () {
@@ -20,17 +19,23 @@ public class SpeedIncrese : MonoBehaviour {
     private void OnMouseDown()
     {
         int total_systems = sl.Systems.Count;
-        for (int i = 0; i < 4; i++)
+        for (int l = 0; l < 8; l++)
+        {
+            GameObject g = GameObject.Find(sl.Systems[0].Planets[l].planetName+"1Center");
+            g.GetComponent<rotate>().rotateSpeed = g.GetComponent<rotate>().rotateSpeed +g.GetComponent<rotate>().rotateSpeed;
+        }
+        for (int i = 1; i < 4; i++)
         {
             Vector3 v = new Vector3(0f, (i * -30f), 0f);
             int m;
             Collider[] colliders;
             if ((colliders = Physics.OverlapSphere(v, 0f)).Length > 1)
             {
+                Debug.Log(colliders.Length);
                 foreach (var collider in colliders)
                 {
                     var go1 = collider.gameObject;
-                    Debug.Log(go1);
+                    Debug.Log(go1.name);
                     for (int k=0;k<total_systems;k++)
                     {
                         if ((sl.Systems[k].sunName+"compare") == go1.name.Substring(0, go1.name.Length - 1))
@@ -38,33 +43,15 @@ public class SpeedIncrese : MonoBehaviour {
                             int planet_count = sl.Systems[k].Planets.Count;
                             //Debug.Log(go1.name);
                             //Debug.Log(planet_count);
-                            /*for (int j = 0; j < planet_count; j++)
+                            for (int j = 0; j < planet_count; j++)
                             {
                                 string planet = string.Concat(sl.Systems[k].Planets[j].planetName, "compare");
                                 m = Convert.ToInt32(go1.name.Substring(go1.name.Length - 1))+1;
                                 string find = string.Concat(planet,m.ToString() ) + "Center";
                                 GameObject g = GameObject.Find(find);
-                                //Debug.Log(g.name);
-                                float z = g.GetComponent<rotate>().rotateSpeed;
-                                g.GetComponent<rotate>().rotateSpeed = z + z;
-                                Debug.Log(k++);
-                            }*/
-                        }
-                        else if(go1.name=="Our Sun0")
-                        {
-                            Debug.Log(go1.name);
-                            /*for (int j = 0; j < 8; j++)
-                            {
-                                m = 1;
-                                string planet = sl.Systems[0].Planets[j].planetName;
-                                string find = string.Concat(planet, m.ToString()) + "Center";
-                                Debug.Log(find);
-                                Debug.Log(k++);
-                                GameObject g = GameObject.Find(find);
-                                //Debug.Log(g.name);
-                                float z = g.GetComponent<rotate>().rotateSpeed;
-                                g.GetComponent<rotate>().rotateSpeed =  z+z;
-                            }*/
+                                //Debug.Log(g.name);                       
+                                g.GetComponent<rotate>().rotateSpeed = g.GetComponent<rotate>().rotateSpeed + g.GetComponent<rotate>().rotateSpeed;
+                            }
                         }
                     }
                 }

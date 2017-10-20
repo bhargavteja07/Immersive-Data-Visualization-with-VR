@@ -409,7 +409,7 @@ public class Planets : MonoBehaviour
         sunSupport = GameObject.CreatePrimitive(PrimitiveType.Cube);
         sunSupport.transform.localScale = new Vector3(0.1F, 10.0F, 0.1F);
         sunSupport.transform.position = new Vector3(0, 5, 0);
-        sunSupport.name = "Sun Support";
+        sunSupport.name = "Sun Support"+"  "+newSun.name;
 
         sunSupport.transform.parent = sunRelated.transform;
 
@@ -562,6 +562,7 @@ public class Planets : MonoBehaviour
 
         sunText.transform.parent = gstar.transform;
     }
+
     void menu()
     {
         Debug.Log("in menu");
@@ -716,8 +717,8 @@ public class Planets : MonoBehaviour
 
     void Start()
     {
-        createMenu();
         sl= JsonUtility.FromJson<SystemList>(jsonString);
+        createMenu();
         k = Reset.GetComponent<Reset>().k;
         SetInitialValues();
         revolutionSpeed = float.Parse(val.orginalvalues.rotation_speed);
@@ -731,7 +732,6 @@ public class Planets : MonoBehaviour
         var systemOffset = new Vector3(0, 0, 0);
         var oneOffset = new Vector3(0, -30, 0);
         int total_systems = sl.Systems.Count;
-        Debug.Log(total_systems);
         string[] sol = new string[7];
         for (int i = 0; i < total_systems; i++)
         {
@@ -760,6 +760,7 @@ public class Planets : MonoBehaviour
         }
         allCenter.transform.localScale = new Vector3(0.1F, 0.1F, 0.1F);
     }
+
     void Update()
     {
         revolutionSpeed = float.Parse(val.changedvalues.rotation_speed);
