@@ -19,31 +19,15 @@ public class Display3D : MonoBehaviour {
 	}
     void deleteStar(GameObject go)
     {
+        Debug.Log(go.name);
         int total_systems = sl.Systems.Count;
         string[] sol = new string[7];
         for (int i = 0; i < total_systems; i++)
         {
-            if (go.name == sl.Systems[i].sunName + "compare")
+            if (go.name.Substring(0,go.name.Length-1) == sl.Systems[i].sunName + "compare")
             {
-                Debug.Log(go.name);
-                Destroy(go);
-                int planet_count = sl.Systems[i].Planets.Count;
-                for (int j = 0; j < planet_count; j++)
-                {
-                    GameObject g = GameObject.Find(sl.Systems[i].Planets[j].planetName+"compare");
-                    Debug.Log(g.name);
-                    Destroy(g);
-                }
-            }
-        }
-        var v = new Vector3(0, 10F, 0);
-        Collider[] colliders;
-        if ((colliders = Physics.OverlapSphere(oneOffset + v, 0F /* Radius */)).Length > 1) //Presuming the object you are testing also has a collider 0 otherwise
-        {
-            foreach (var collider in colliders)
-            {
-                Destroy(collider.gameObject);
-
+                GameObject solarcenter = GameObject.Find("SolarCenter " + go.name);
+                Destroy(solarcenter);
             }
         }
     }
@@ -83,7 +67,7 @@ public class Display3D : MonoBehaviour {
                 planets[j, k++] = sl.Systems[i].Planets[j].planetName + "compare";
                 planets[j, k++] = sl.Systems[i].Planets[j].planetMass;
             }
-            //            Debug.Log("yo1");
+            Debug.Log(star_name);
             if (sol[1] == (star_name + "compare"))
             {
                 //                Debug.Log("yo2");
@@ -140,18 +124,16 @@ public class Display3D : MonoBehaviour {
                 planets[j, k++] = sl.Systems[i].Planets[j].planetName + "compare";
                 planets[j, k++] = sl.Systems[i].Planets[j].planetMass;
             }
-//            Debug.Log("yo1");
+
             if (sol[1]==(star_name + "compare"))
             {
-                //                Debug.Log("yo2");
                 Collider[] colliders;                
                 if ((colliders = Physics.OverlapSphere(oneOffset, 0f /* Radius */)).Length > 1) //Presuming the object you are testing also has a collider 0 otherwise
                 {
                     foreach (var collider in colliders)
-                    {
-                        
+                    {    
                         var go1 = collider.gameObject; //This is the game object you collided with
-                        //Debug.Log(go1);
+                        Debug.Log(go1);
                         deleteStar(go1);
                     }
                 }
