@@ -1,0 +1,31 @@
+{
+  "Systems": [
+    {
+      "sunScale": "1",
+      "sunName": "Alpha Centuria",
+      "sunTexture": "sol",
+      "sunVar": "G2V",
+      "sunHabitat": "1.0",
+      "lightYears": "0",
+      "discoveryMethod": "",
+      "Planets": [
+        {
+          "planetDistance": "10.9",
+          "planetSize": "695,700",
+          "planetSpeed": "79.9",
+          "textureName": "uranus",
+          "planetName": "Alpha Centuria A",
+          "planetMass": "1.10"
+        },
+        {
+          "planetDistance": "12.8",
+          "planetSize": "299151",
+          "planetSpeed": "79.9",
+          "textureName": "uranus",
+          "planetName": "Alpha Centuria A",
+          "planetMass": "0.93"
+        }
+      ]
+    }
+  ]
+}

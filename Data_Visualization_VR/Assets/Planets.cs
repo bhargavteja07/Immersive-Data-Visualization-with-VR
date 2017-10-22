@@ -35,7 +35,7 @@ public class Planets : MonoBehaviour
 
     public static string jsonString_values = File.ReadAllText("Assets/Resources/InputValues.json");
     public jsonDct val;// = JsonUtility.FromJson<jsonDct>(jsonString_values);
-    
+
     public GameObject allCenter;
     public GameObject SolarCenter;
     public GameObject AllOrbits;
@@ -76,6 +76,8 @@ public class Planets : MonoBehaviour
     public GameObject earthSizedText;
     public GameObject closestEarthText;
     public GameObject sunLikeStarsText;
+
+
 
     public static int starNumber = 0;
     public static int sideStarNumber = 0;
@@ -134,7 +136,7 @@ public class Planets : MonoBehaviour
                 float mass = float.Parse(planetMass);
                 if ((0 < mass) && (mass <= 2))
                 {
-//                    Debug.Log("im in <2");
+                    //                    Debug.Log("im in <2");
                     planetSize = ((5F / 8F) * mass) * earthRadius;
                 }
                 else if ((2 < mass) && (mass <= 5))
@@ -157,9 +159,9 @@ public class Planets : MonoBehaviour
                 {
                     planetSize = mass * earthRadius / 20;
                 }
-//                Debug.Log(planetName + " --  " + planetSize);
+                //                Debug.Log(planetName + " --  " + planetSize);
             }
-            
+
             planetSize = planetSize * 2.0F / 10000.0F;
 
             newPlanetCenter = new GameObject();
@@ -179,7 +181,7 @@ public class Planets : MonoBehaviour
             newPlanet.GetComponent<planetMeta>().planetDistance = planetDistance;
 
             newPlanetCenter.GetComponent<rotate>().rotateSpeed = planetSpeed;
-            
+
             planetMaterial = new Material(Shader.Find("Standard"));
             newPlanet.GetComponent<MeshRenderer>().material = planetMaterial;
             planetMaterial.mainTexture = Resources.Load(textureName) as Texture;
@@ -210,7 +212,7 @@ public class Planets : MonoBehaviour
 
     public void sideDealWithPlanets(string[,] planets, GameObject thisSide, GameObject theseOrbits)
     {
-        GameObject newPlanet,sideplanetText;
+        GameObject newPlanet, sideplanetText;
         GameObject sunRelated;
         Material planetMaterial;
         int planetCounter;
@@ -263,7 +265,7 @@ public class Planets : MonoBehaviour
                 newPlanet.GetComponent<planetMeta>().planetSize = planetSize;
                 newPlanet.GetComponent<planetMeta>().planetDistance = planetDistance;
 
-                newPlanet.GetComponent<Collider>().isTrigger = true;
+                //newPlanet.GetComponent<Collider>().isTrigger = true;
 
                 planetMaterial = new Material(Shader.Find("Standard"));
                 newPlanet.GetComponent<MeshRenderer>().material = planetMaterial;
@@ -329,7 +331,7 @@ public class Planets : MonoBehaviour
         sideSunText.transform.position = new Vector3(-0.8F * panelWidth, 22.0F * panelHeight, 0);
         sideSunText.transform.localScale = new Vector3(0.1F, 0.1F, 0.1F);
         var sunTextMesh = sideSunText.AddComponent<TextMesh>();
-        sunTextMesh.text = star[1] +"\n"+ star[5] + "\n" + star[6];
+        sunTextMesh.text = star[1] + "\n" + star[5] + "\n" + star[6];
         sunTextMesh.fontSize = 100;
         sideSunText.transform.parent = thisSide.transform;
         sideSunText.GetComponent<Renderer>().enabled = false;
@@ -341,7 +343,7 @@ public class Planets : MonoBehaviour
         newSideSun.GetComponent<Display3D>().star_name = star[1];
         newSideSun.GetComponent<Display3D>().sl = sl;
         newSideSun.GetComponent<Display3D>().go = allCenter;
-        
+
         newSideSun.GetComponent<Collider>().isTrigger = true;
 
         float innerHab = float.Parse(star[4]) * 9.5F;
@@ -363,7 +365,7 @@ public class Planets : MonoBehaviour
         habZone.GetComponent<MeshRenderer>().material = habMaterial;
         habMaterial.mainTexture = Resources.Load("habitable") as Texture;
 
-        
+
 
     }
 
@@ -423,13 +425,13 @@ public class Planets : MonoBehaviour
         sunSupport = GameObject.CreatePrimitive(PrimitiveType.Cube);
         sunSupport.transform.localScale = new Vector3(0.1F, 10.0F, 0.1F);
         sunSupport.transform.position = new Vector3(0, 5, 0);
-        sunSupport.name = "Sun Support"+"  "+newSun.name;
+        sunSupport.name = "Sun Support" + "  " + newSun.name;
 
         sunSupport.transform.parent = sunRelated.transform;
 
 
         sunText = new GameObject();
-        sunText.name = newSun.name+" text";
+        sunText.name = newSun.name + " text";
         sunText.transform.position = new Vector3(0, 5, 0);
         sunText.transform.localScale = new Vector3(0.1F, 0.1F, 0.1F);
         var sunTextMesh = sunText.AddComponent<TextMesh>();
@@ -460,7 +462,7 @@ public class Planets : MonoBehaviour
         SunStuff = new GameObject();
         Planets1 = new GameObject();
 
-        SolarCenter.name = "SolarCenter" + " " + starInfo[1]+starNumber.ToString();
+        SolarCenter.name = "SolarCenter" + " " + starInfo[1] + starNumber.ToString();
         AllOrbits.name = "All Orbits" + " " + starInfo[1];
         SunStuff.name = "Sun Stuff" + " " + starInfo[1];
         Planets1.name = "Planets" + " " + starInfo[1];
@@ -470,7 +472,7 @@ public class Planets : MonoBehaviour
         SunStuff.transform.parent = SolarCenter.transform;
         Planets1.transform.parent = SolarCenter.transform;
 
-        
+
         if (k == 0)
         {
             dealWithStar(starInfo, SunStuff, AllOrbits);
@@ -498,8 +500,8 @@ public class Planets : MonoBehaviour
 
         deleteStar = GameObject.CreatePrimitive(PrimitiveType.Cube);
         Vector3 v1 = new Vector3(-17f, -1.5f, 0f);
-        deleteStar.transform.position= SolarSide.transform.position + v1;
-        deleteStar.transform.localScale= new Vector3(1f, 1f, 0.1f);
+        deleteStar.transform.position = SolarSide.transform.position + v1;
+        deleteStar.transform.localScale = new Vector3(1f, 1f, 0.1f);
         deleteStar.name = SolarSide.name + "deletestar";
         deleteStar.transform.parent = SolarSide.transform;
         deleteStar.AddComponent<DeleteStar>();
@@ -537,26 +539,71 @@ public class Planets : MonoBehaviour
         dealWithStar(starInfo, SunStuff, AllOrbits);
         dealWithPlanets(planetInfo, Planets1, AllOrbits);
         k++;
-       
+
         // need to do this last
         SolarCenter.transform.position = offset;
     }
+
+
+    public void dealWithBinarySystem(GameObject all)
+    {
+        string jsonString_binary = File.ReadAllText("Assets/Resources/binary_system_information.json");
+        SystemList sl_binary = JsonUtility.FromJson<SystemList>(jsonString_binary);
+        allCenter = new GameObject();
+        allCenter.transform.parent = all.transform;
+        int sunScaleRelative = 695500;
+        long austronamicalUnit = 149597870;
+        float year = 365;
+        int earth_mass = 1;
+        int earth_radius = 6371;
+        allCenter.name = "all systems";
+        int total_systems = sl_binary.Systems.Count;
+        string[] sol = new string[7];
+        Vector3 systemOffset = new Vector3(-50f, -50f, -50f);
+        Vector3 oneOffset = new Vector3(0f, -30f, 0f);
+        for (int i = 0; i < total_systems; i++)
+        {
+            int z = 0;
+            sol[z++] = (float.Parse(sl.Systems[i].sunScale) * sunScaleRelative).ToString();
+            sol[z++] = sl_binary.Systems[i].sunName;
+            sol[z++] = sl_binary.Systems[i].sunTexture;
+            sol[z++] = sl_binary.Systems[i].sunVar;
+            sol[z++] = sl_binary.Systems[i].sunHabitat;
+            sol[z++] = sl_binary.Systems[i].lightYears;
+            sol[z++] = sl_binary.Systems[i].discoveryMethod;
+            int planet_count = sl_binary.Systems[i].Planets.Count;
+            string[,] planets = new string[planet_count, 6];
+            for (int j = 0; j < planet_count; j++)
+            {
+                z = 0;
+                planets[j, z++] = (float.Parse(sl_binary.Systems[i].Planets[j].planetDistance) * austronamicalUnit).ToString();
+                planets[j, z++] = sl_binary.Systems[i].Planets[j].planetSize;
+                planets[j, z++] = (float.Parse(sl_binary.Systems[i].Planets[j].planetSpeed) / year).ToString();
+                planets[j, z++] = sl_binary.Systems[i].Planets[j].textureName;
+                planets[j, z++] = sl_binary.Systems[i].Planets[j].planetName;
+                planets[j, z++] = sl_binary.Systems[i].Planets[j].planetMass;
+            }
+            dealWithSystem_once(sol, planets, systemOffset, allCenter);
+            systemOffset += oneOffset;
+        }
+    }
+
 
     void DrawStar(string[] star, GameObject gstar)
     {
         GameObject newSun;
         Material sunMaterial;
-        GameObject sunText;        
+        GameObject sunText;
 
         float sunScale = float.Parse(star[0]) / 100000F;
         float centerSunSize = 1F;
 
-        float lightYears = float.Parse(star[5])/10000F;
+        float lightYears = float.Parse(star[5]) / 10000F;
 
         newSun = GameObject.CreatePrimitive(PrimitiveType.Sphere);
         newSun.AddComponent<rotate>();
         newSun.name = star[1];
-        newSun.transform.position = new Vector3(-50f,-50f*lightYears,0f);
+        newSun.transform.position = new Vector3(-50f, -50f * lightYears, 0f);
         newSun.transform.localScale = new Vector3(centerSunSize, centerSunSize, centerSunSize);
 
         newSun.GetComponent<rotate>().rotateSpeed = -0.25F;
@@ -566,7 +613,7 @@ public class Planets : MonoBehaviour
         sunMaterial.mainTexture = Resources.Load(star[2]) as Texture;
 
         newSun.transform.parent = gstar.transform;
-        
+
         sunText = new GameObject();
         sunText.name = newSun.name + " text";
         sunText.transform.position = newSun.transform.position;
@@ -578,89 +625,97 @@ public class Planets : MonoBehaviour
         sunText.transform.parent = gstar.transform;
     }
 
-    void menu()
+
+    /*    void menu()
+        {
+            Debug.Log("in menu");
+            if (menuDisplay)
+            {
+                Save.GetComponent<MeshRenderer>().enabled = false;
+                SaveText.GetComponent<MeshRenderer>().enabled = false;
+                Reset.GetComponent<MeshRenderer>().enabled = false;
+                ResetText.GetComponent<MeshRenderer>().enabled = false;
+
+                planetSize.GetComponent<MeshRenderer>().enabled = false;
+                planetSizeText.GetComponent<MeshRenderer>().enabled = false;
+                planetSizePlus.GetComponent<MeshRenderer>().enabled = false;
+                planetSizeMinus.GetComponent<MeshRenderer>().enabled = false;
+
+                orbitSize.GetComponent<MeshRenderer>().enabled = false;
+                orbitSizeText.GetComponent<MeshRenderer>().enabled = false;
+                orbitSizePlus.GetComponent<MeshRenderer>().enabled = false;
+                orbitSizeMinus.GetComponent<MeshRenderer>().enabled = false;
+
+                speed.GetComponent<MeshRenderer>().enabled = false;
+                speedText.GetComponent<MeshRenderer>().enabled = false;
+                speedPlus.GetComponent<MeshRenderer>().enabled = false;
+                speedMinus.GetComponent<MeshRenderer>().enabled = false;
+
+                planetsNumber.GetComponent<MeshRenderer>().enabled = false;
+                planetsNumberText.GetComponent<MeshRenderer>().enabled = false;
+                habitableZones.GetComponent<MeshRenderer>().enabled = false;
+                habitableZonesText.GetComponent<MeshRenderer>().enabled = false;
+                sunLikeStars.GetComponent<MeshRenderer>().enabled = false;
+                sunLikeStarsText.GetComponent<MeshRenderer>().enabled = false;
+                closestEarth.GetComponent<MeshRenderer>().enabled = false;
+                closestEarthText.GetComponent<MeshRenderer>().enabled = false;
+                earthSized.GetComponent<MeshRenderer>().enabled = false;
+                earthSizedText.GetComponent<MeshRenderer>().enabled = false;
+
+                menuDisplay = false;
+            }
+            else
+            {
+                Save.GetComponent<MeshRenderer>().enabled = true;
+                SaveText.GetComponent<MeshRenderer>().enabled = true;
+                Reset.GetComponent<MeshRenderer>().enabled = true;
+                ResetText.GetComponent<MeshRenderer>().enabled = true;
+
+                planetSize.GetComponent<MeshRenderer>().enabled = true;
+                planetSizeText.GetComponent<MeshRenderer>().enabled = true;
+                planetSizePlus.GetComponent<MeshRenderer>().enabled = true;
+                planetSizeMinus.GetComponent<MeshRenderer>().enabled = true;
+
+                orbitSize.GetComponent<MeshRenderer>().enabled = true;
+                orbitSizeText.GetComponent<MeshRenderer>().enabled = true;
+                orbitSizePlus.GetComponent<MeshRenderer>().enabled = true;
+                orbitSizeMinus.GetComponent<MeshRenderer>().enabled = true;
+
+                speed.GetComponent<MeshRenderer>().enabled = true;
+                speedText.GetComponent<MeshRenderer>().enabled = true;
+                speedPlus.GetComponent<MeshRenderer>().enabled = true;
+                speedMinus.GetComponent<MeshRenderer>().enabled = true;
+
+                planetsNumber.GetComponent<MeshRenderer>().enabled = true;
+                planetsNumberText.GetComponent<MeshRenderer>().enabled = true;
+                habitableZones.GetComponent<MeshRenderer>().enabled = true;
+                habitableZonesText.GetComponent<MeshRenderer>().enabled = true;
+                sunLikeStars.GetComponent<MeshRenderer>().enabled = true;
+                sunLikeStarsText.GetComponent<MeshRenderer>().enabled = true;
+                closestEarth.GetComponent<MeshRenderer>().enabled = true;
+                closestEarthText.GetComponent<MeshRenderer>().enabled = true;
+                earthSized.GetComponent<MeshRenderer>().enabled = true;
+                earthSizedText.GetComponent<MeshRenderer>().enabled = true;
+                menuDisplay = true;
+            }
+        }
+    */
+    void DeleteMenu()
     {
-        Debug.Log("in menu");
-        if (menuDisplay)
-        {
-            Save.GetComponent<MeshRenderer>().enabled = false;
-            SaveText.GetComponent<MeshRenderer>().enabled = false;
-            Reset.GetComponent<MeshRenderer>().enabled = false;
-            ResetText.GetComponent<MeshRenderer>().enabled = false;
-
-            planetSize.GetComponent<MeshRenderer>().enabled = false;
-            planetSizeText.GetComponent<MeshRenderer>().enabled = false;
-            planetSizePlus.GetComponent<MeshRenderer>().enabled = false;
-            planetSizeMinus.GetComponent<MeshRenderer>().enabled = false;
-
-            orbitSize.GetComponent<MeshRenderer>().enabled = false;
-            orbitSizeText.GetComponent<MeshRenderer>().enabled = false;
-            orbitSizePlus.GetComponent<MeshRenderer>().enabled = false;
-            orbitSizeMinus.GetComponent<MeshRenderer>().enabled = false;
-
-            speed.GetComponent<MeshRenderer>().enabled = false;
-            speedText.GetComponent<MeshRenderer>().enabled = false;
-            speedPlus.GetComponent<MeshRenderer>().enabled = false;
-            speedMinus.GetComponent<MeshRenderer>().enabled = false;
-
-            planetsNumber.GetComponent<MeshRenderer>().enabled = false;
-            planetsNumberText.GetComponent<MeshRenderer>().enabled = false;
-            habitableZones.GetComponent<MeshRenderer>().enabled = false;
-            habitableZonesText.GetComponent<MeshRenderer>().enabled = false;
-            sunLikeStars.GetComponent<MeshRenderer>().enabled = false;
-            sunLikeStarsText.GetComponent<MeshRenderer>().enabled = false;
-            closestEarth.GetComponent<MeshRenderer>().enabled = false;
-            closestEarthText.GetComponent<MeshRenderer>().enabled = false;
-            earthSized.GetComponent<MeshRenderer>().enabled = false;
-            earthSizedText.GetComponent<MeshRenderer>().enabled = false;
-
-            menuDisplay = false;
-        }
-        else
-        {
-            Save.GetComponent<MeshRenderer>().enabled = true;
-            SaveText.GetComponent<MeshRenderer>().enabled = true;
-            Reset.GetComponent<MeshRenderer>().enabled = true;
-            ResetText.GetComponent<MeshRenderer>().enabled = true;
-
-            planetSize.GetComponent<MeshRenderer>().enabled = true;
-            planetSizeText.GetComponent<MeshRenderer>().enabled = true;
-            planetSizePlus.GetComponent<MeshRenderer>().enabled = true;
-            planetSizeMinus.GetComponent<MeshRenderer>().enabled = true;
-
-            orbitSize.GetComponent<MeshRenderer>().enabled = true;
-            orbitSizeText.GetComponent<MeshRenderer>().enabled = true;
-            orbitSizePlus.GetComponent<MeshRenderer>().enabled = true;
-            orbitSizeMinus.GetComponent<MeshRenderer>().enabled = true;
-
-            speed.GetComponent<MeshRenderer>().enabled = true;
-            speedText.GetComponent<MeshRenderer>().enabled = true;
-            speedPlus.GetComponent<MeshRenderer>().enabled = true;
-            speedMinus.GetComponent<MeshRenderer>().enabled = true;
-
-            planetsNumber.GetComponent<MeshRenderer>().enabled = true;
-            planetsNumberText.GetComponent<MeshRenderer>().enabled = true;
-            habitableZones.GetComponent<MeshRenderer>().enabled = true;
-            habitableZonesText.GetComponent<MeshRenderer>().enabled = true;
-            sunLikeStars.GetComponent<MeshRenderer>().enabled = true;
-            sunLikeStarsText.GetComponent<MeshRenderer>().enabled = true;
-            closestEarth.GetComponent<MeshRenderer>().enabled = true;
-            closestEarthText.GetComponent<MeshRenderer>().enabled = true;
-            earthSized.GetComponent<MeshRenderer>().enabled = true;
-            earthSizedText.GetComponent<MeshRenderer>().enabled = true;
-            menuDisplay = true;
-        }
+        GameObject g = GameObject.Find("menuObject");
+        Destroy(g);
     }
 
-    void createButtons(GameObject g1,GameObject g2,string s,float offset)
+
+    void createButtons(GameObject g1, GameObject g2, string s, float offset)
     {
-        Vector3 v = new Vector3(0.5f, 0f+offset, 1f);
+        Vector3 v = new Vector3(0.5f, 0f + offset, 1f);
 
         g1.transform.position = GameObject.FindGameObjectWithTag("Working Camera").transform.position + v;
         g1.transform.localScale = new Vector3(.5f, .1f, .001f);
-        g1.transform.parent = GameObject.FindGameObjectWithTag("Working Camera").transform;
-        
-        
+        g1.transform.parent = GameObject.Find("menuObject").transform;
+
+
         g2.transform.position = new Vector3(g1.transform.position.x - 0.18f, g1.transform.position.y + 0.045f, g1.transform.position.z);
         g2.transform.localScale = new Vector3(0.1F, 0.1F, 0.1F);
         g2.transform.parent = g1.transform;
@@ -668,15 +723,16 @@ public class Planets : MonoBehaviour
         ResetMesh.text = s;
         ResetMesh.fontSize = 10;
         ResetMesh.color = Color.red;
-        g1.GetComponent<MeshRenderer>().enabled = false;
-        g2.GetComponent<MeshRenderer>().enabled = false;
+        g1.GetComponent<MeshRenderer>().enabled = true;
+        g2.GetComponent<MeshRenderer>().enabled = true;
     }
+
 
     void createSmallButtons(GameObject g1, GameObject g2, GameObject g3)
     {
-        Vector3 plus=new Vector3(.5f,0f,0f);
+        Vector3 plus = new Vector3(.5f, 0f, 0f);
         Vector3 minus = new Vector3(-.5f, 0f, 0f);
-        Vector3 size_decrese = new Vector3(0f,1f,0f);
+        Vector3 size_decrese = new Vector3(0f, 1f, 0f);
         Material inc = new Material(Resources.Load("Increse") as Material);
         Material dec = new Material(Resources.Load("New Material") as Material);
 
@@ -684,34 +740,44 @@ public class Planets : MonoBehaviour
         g2.transform.position = g1.transform.position + plus;
         g2.transform.localScale = g1.transform.localScale + size_decrese;
         g2.GetComponent<MeshRenderer>().material = inc;
-        g2.GetComponent<MeshRenderer>().enabled = false;
 
 
         g3.transform.parent = g1.transform;
         g3.transform.position = g1.transform.position + minus;
         g3.transform.localScale = g1.transform.localScale + size_decrese;
         g3.GetComponent<MeshRenderer>().material = dec;
-        g3.GetComponent<MeshRenderer>().enabled = false;
+        g2.GetComponent<MeshRenderer>().enabled = true;
+        g3.GetComponent<MeshRenderer>().enabled = true;
+
     }
 
-    void createMenu()
+
+    void createMenu(GameObject mainMenu)
     {
         Save = GameObject.CreatePrimitive(PrimitiveType.Cube);
         Save.AddComponent<SaveState>();
         SaveText = new GameObject();
+        //Save.transform.parent = mainMenu.transform;
+        //SaveText.transform.parent = mainMenu.transform;
         createButtons(Save, SaveText, "SAVE", 0);
 
         Reset = GameObject.CreatePrimitive(PrimitiveType.Cube);
         Reset.AddComponent<Reset>();
         ResetText = new GameObject();
-        createButtons(Reset,ResetText,"RESET",0.13f);
-      
+        //Reset.transform.parent = mainMenu.transform;
+        //ResetText.transform.parent = mainMenu.transform;
+        createButtons(Reset, ResetText, "RESET", 0.13f);
+
         planetSize = GameObject.CreatePrimitive(PrimitiveType.Cube);
         planetSizeText = new GameObject();
         planetSizePlus = GameObject.CreatePrimitive(PrimitiveType.Cube);
         planetSizeMinus = GameObject.CreatePrimitive(PrimitiveType.Cube);
-        createButtons(planetSize, planetSizeText, "PLANET",0.26f);
-        createSmallButtons(planetSize,planetSizePlus,planetSizeMinus);
+        //planetSize.transform.parent = mainMenu.transform;
+        //planetSizeText.transform.parent = mainMenu.transform;
+        //planetSizePlus.transform.parent = mainMenu.transform;
+        //planetSizeMinus.transform.parent = mainMenu.transform;
+        createButtons(planetSize, planetSizeText, "PLANET", 0.26f);
+        createSmallButtons(planetSize, planetSizePlus, planetSizeMinus);
         planetSizePlus.AddComponent<increasePlanetScale>();
         planetSizePlus.GetComponent<increasePlanetScale>().sl = sl;
         planetSizeMinus.AddComponent<decreasePlanetScale>();
@@ -721,8 +787,12 @@ public class Planets : MonoBehaviour
         orbitSizeText = new GameObject();
         orbitSizePlus = GameObject.CreatePrimitive(PrimitiveType.Cube);
         orbitSizeMinus = GameObject.CreatePrimitive(PrimitiveType.Cube);
+        //orbitSize.transform.parent = mainMenu.transform;
+        //orbitSizeText.transform.parent = mainMenu.transform;
+        //orbitSizePlus.transform.parent = mainMenu.transform;
+        //orbitSizeMinus.transform.parent = mainMenu.transform;
         createButtons(orbitSize, orbitSizeText, "ORBIT", 0.39f);
-        createSmallButtons(orbitSize,orbitSizePlus,orbitSizeMinus);
+        createSmallButtons(orbitSize, orbitSizePlus, orbitSizeMinus);
         orbitSizePlus.AddComponent<increaseOrbitScale>();
         orbitSizePlus.GetComponent<increaseOrbitScale>().sl = sl;
         orbitSizeMinus.AddComponent<decreaseOrbitScale>();
@@ -736,9 +806,14 @@ public class Planets : MonoBehaviour
         speedPlus.GetComponent<SpeedIncrese>().sl = sl;
         speedMinus.AddComponent<SpeedDecrese>();
         speedMinus.GetComponent<SpeedDecrese>().sl = sl;
+        //speed.transform.parent = mainMenu.transform;
+        //speedText.transform.parent = mainMenu.transform;
+        //speedPlus.transform.parent = mainMenu.transform;
+        //speedMinus.transform.parent = mainMenu.transform;
         createButtons(speed, speedText, "SPEED", 0.52f);
         createSmallButtons(speed, speedPlus, speedMinus);
     }
+
 
     void createButtons2(GameObject g1, GameObject g2, string s, float offset)
     {
@@ -746,7 +821,7 @@ public class Planets : MonoBehaviour
 
         g1.transform.position = GameObject.FindGameObjectWithTag("Working Camera").transform.position + v;
         g1.transform.localScale = new Vector3(.5f, .1f, .001f);
-        g1.transform.parent = GameObject.FindGameObjectWithTag("Working Camera").transform;
+        g1.transform.parent = GameObject.Find("menuObject").transform;
 
         g2.transform.position = new Vector3(g1.transform.position.x - 0.18f, g1.transform.position.y + 0.045f, g1.transform.position.z);
         g2.transform.localScale = new Vector3(0.1F, 0.1F, 0.1F);
@@ -755,37 +830,54 @@ public class Planets : MonoBehaviour
         ResetMesh.text = s;
         ResetMesh.fontSize = 10;
         ResetMesh.color = Color.red;
-        g1.GetComponent<MeshRenderer>().enabled = false;
-        g2.GetComponent<MeshRenderer>().enabled = false;
+        g1.GetComponent<MeshRenderer>().enabled = true;
+        g2.GetComponent<MeshRenderer>().enabled = true;
     }
 
-    void createMenu2()
+
+    void createMenu2(GameObject mainMenu)
     {
         Debug.Log("CREATEMENU2");
         planetsNumber = GameObject.CreatePrimitive(PrimitiveType.Cube);
         planetsNumber.name = "planetsNumber";
         planetsNumberText = new GameObject();
-        createButtons2(planetsNumber,planetsNumberText,"Planets",0f);
+        //planetsNumber.transform.parent = mainMenu.transform;
+        //planetsNumberText.transform.parent = mainMenu.transform
+        createButtons2(planetsNumber, planetsNumberText, "Planets", 0f);
+
         habitableZones = GameObject.CreatePrimitive(PrimitiveType.Cube);
         habitableZones.name = "habitableZones";
         habitableZonesText = new GameObject();
-        createButtons2(habitableZones,habitableZonesText,"Habitable",.55f);
+        //habitableZones.transform.parent = mainMenu.transform;
+        //habitableZonesText.transform.parent = mainMenu.transform;
+        createButtons2(habitableZones, habitableZonesText, "Habitable", .55f);
+
         earthSized = GameObject.CreatePrimitive(PrimitiveType.Cube);
         earthSized.name = "earthsized";
         earthSizedText = new GameObject();
-        createButtons2(earthSized,earthSizedText,"earthSize",1.1f);
+        //earthSized.transform.parent = mainMenu.transform;
+        //earthSizedText.transform.parent = mainMenu.transform;
+        createButtons2(earthSized, earthSizedText, "earthSize", 1.1f);
+
         closestEarth = GameObject.CreatePrimitive(PrimitiveType.Cube);
         closestEarth.name = "closest to earth";
         closestEarthText = new GameObject();
-        createButtons2(closestEarth,closestEarthText,"Nearest",1.65f);
+        //closestEarth.transform.parent = mainMenu.transform;
+        //closestEarthText.transform.parent = mainMenu.transform;
+        createButtons2(closestEarth, closestEarthText, "Nearest", 1.65f);
+
         sunLikeStars = GameObject.CreatePrimitive(PrimitiveType.Cube);
         sunLikeStars.name = "sun like stars";
         sunLikeStarsText = new GameObject();
-        createButtons2(sunLikeStars,sunLikeStarsText,"sun Like",2.2f);
+        //sunLikeStars.transform.parent = mainMenu.transform;
+        //sunLikeStarsText.transform.parent = mainMenu.transform;
+        createButtons2(sunLikeStars, sunLikeStarsText, "sun Like", 2.2f);
     }
+
 
     void SetInitialValues()
     {
+        val = JsonUtility.FromJson<jsonDct>(jsonString_values);
         val.changedvalues.orbitXScale = val.orginalvalues.orbitXScale;
         val.changedvalues.planetScaleFactor = val.orginalvalues.planetScaleFactor;
         val.changedvalues.rotation_speed = val.orginalvalues.rotation_speed;
@@ -795,18 +887,19 @@ public class Planets : MonoBehaviour
         File.WriteAllText("Assets/Resources/InputValues.json", st);
     }
 
+
     void DeleteSideView()
     {
         for (int index = 0; index <= 600; index++)
         {
-            Vector3 v = new Vector3(0f, 8f-index*4.5f, 10f);
+            Vector3 v = new Vector3(0f, 8f - index * 4.5f, 10f);
             Collider[] colliders;
             if ((colliders = Physics.OverlapSphere(v, 1f)).Length > 1)
             {
                 foreach (var collider in colliders)
                 {
                     var go = collider.gameObject;
-                    if ((go.name.Length>12)&&(go.name.Substring(0,12)=="Side View of"))
+                    if ((go.name.Length > 12) && (go.name.Substring(0, 12) == "Side View of"))
                     {
                         Destroy(go);
                     }
@@ -814,9 +907,12 @@ public class Planets : MonoBehaviour
             }
         }
     }
+
+
     void Start()
     {
-        sl= JsonUtility.FromJson<SystemList>(jsonString);
+
+        sl = JsonUtility.FromJson<SystemList>(jsonString);
         SetInitialValues();
         revolutionSpeed = float.Parse(val.orginalvalues.rotation_speed);
         allCenter = new GameObject();
@@ -856,9 +952,8 @@ public class Planets : MonoBehaviour
             systemOffset += oneOffset;
         }
         allCenter.transform.localScale = new Vector3(0.1F, 0.1F, 0.1F);
-        createMenu();
-        createMenu2();
-        k = Reset.GetComponent<Reset>().k;
+        k = 0;
+        //        dealWithBinarySystem(allCenter);
     }
 
     void Update()
@@ -866,12 +961,41 @@ public class Planets : MonoBehaviour
         bool isKeyPressed = Input.GetKeyDown(KeyCode.Space);
         if (isKeyPressed)
         {
-            menu();
-            DeleteSideView();
+            if (menuDisplay)
+            {
+                DeleteMenu();
+                menuDisplay = false;
+            }
+            else
+            {
+                GameObject menuObject = new GameObject();
+                menuObject.name = "menuObject";
+                menuObject.transform.parent = allCenter.transform;
+                createMenu(menuObject);
+                createMenu2(menuObject);
+                menuDisplay = true;
+            }
+            //DeleteSideView();
         }
-        //if (SteamVR_Controller.Input(SteamVR_Controller.GetDeviceIndex(SteamVR_Controller.DeviceRelation.Leftmost)).GetHairTriggerDown())
-        //  menu();
-    }
+/*        if (SteamVR_Controller.Input(SteamVR_Controller.GetDeviceIndex(SteamVR_Controller.DeviceRelation.Leftmost)).GetHairTriggerDown())
+        {
+
+            if (menuDisplay)
+            {
+                DeleteMenu();
+                menuDisplay = false;
+            }
+            else
+            {
+                GameObject menuObject = new GameObject();
+                menuObject.name = "menuObject";
+                menuObject.transform.parent = allCenter.transform;
+                createMenu(menuObject);
+                createMenu2(menuObject);
+                menuDisplay = true;
+            }
+        }
+*/    }
 
 }
 
