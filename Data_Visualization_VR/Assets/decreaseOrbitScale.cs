@@ -74,7 +74,6 @@ public class decreaseOrbitScale : MonoBehaviour
                     float sidePDist = sidePlanet.GetComponent<planetMeta>().planetDistance;
                     sidePlanet.transform.localPosition = new Vector3(-0.5F * 30.0F + sidePDist * rescaledOrbitScale, 0, 0);
 
-
                 }
                 GameObject sunMeta = GameObject.Find("Side " + sl.Systems[i].sunName + " Star");
                 float innerHab = sunMeta.GetComponent<planetMeta>().sunInnerHab;

@@ -9,6 +9,7 @@ public class increasePlanetScale : MonoBehaviour
 {
 
     public SystemList sl;
+	public Planets p;
 
     void Start()
     {
@@ -39,9 +40,13 @@ public class increasePlanetScale : MonoBehaviour
         return val.changedvalues.planetScaleFactor;
     }
 
-
+	public void thisCall()
+	{
+//		p.filterBasedOnFlag (1);
+	}
     private void OnMouseDown()
     {
+		thisCall ();
         int sysCount = sl.Systems.Count;
         string planetScale = getPlanetScaleFactor();
         float curPlanetScale = float.Parse(planetScale);

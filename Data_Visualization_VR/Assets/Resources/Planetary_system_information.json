@@ -62,7 +62,7 @@
 						"planetDistance" : "19.218", 
 						"planetSize" :    "25362",       
 						"planetSpeed" :  "30688", 
-						"textureName" :  "neptune", 
+						"textureName" :  "uranus", 
 						"planetName" :   "uranus", 
 						"planetMass" : "0"
 					},
@@ -70,7 +70,7 @@
 						"planetDistance" : "30.11", 
 						"planetSize" :    "24622",      
 						"planetSpeed" :  "60182",  
-						"textureName" : "uranus",    
+						"textureName" : "neptune",    
 						"planetName" :  "neptune", 
 						"planetMass" : "0"
 					}
