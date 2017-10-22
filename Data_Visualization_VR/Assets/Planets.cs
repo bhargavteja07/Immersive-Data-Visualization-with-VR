@@ -291,40 +291,48 @@ public class Planets : MonoBehaviour
 
             planetSize = planetSize * 2.0F / 10000.0F;
             // limit the planets to the width of the side view
-            if ((panelXScale * planetDistance) < panelWidth)
-            {
-                newPlanet = GameObject.CreatePrimitive(PrimitiveType.Sphere);
-                newPlanet.name = planetName;
-                newPlanet.transform.position = new Vector3(-0.5F * panelWidth + planetDistance * panelXScale, 0, 0);
-                newPlanet.transform.localScale = new Vector3(planetSize * planetScaleFactor, planetSize * planetScaleFactor, 5.0F * panelDepth * planetScaleFactor);
-                newPlanet.AddComponent<planetMeta>();
-                newPlanet.GetComponent<planetMeta>().planetSize = planetSize;
-                newPlanet.GetComponent<planetMeta>().planetDistance = planetDistance;
+			if ((panelXScale * planetDistance) < panelWidth) {
+				newPlanet = GameObject.CreatePrimitive (PrimitiveType.Sphere);
+				newPlanet.name = planetName;
+				newPlanet.transform.position = new Vector3 (-0.5F * panelWidth + planetDistance * panelXScale, 0, 0);
+				newPlanet.transform.localScale = new Vector3 (planetSize * planetScaleFactor, planetSize * planetScaleFactor, 5.0F * panelDepth * planetScaleFactor);
+				newPlanet.AddComponent<planetMeta> ();
+				newPlanet.GetComponent<planetMeta> ().planetSize = planetSize;
+				newPlanet.GetComponent<planetMeta> ().planetDistance = planetDistance;
 
-                newPlanet.GetComponent<Collider>().isTrigger = true;
+				newPlanet.GetComponent<Collider> ().isTrigger = true;
 
-                planetMaterial = new Material(Shader.Find("Standard"));
-                newPlanet.GetComponent<MeshRenderer>().material = planetMaterial;
-                planetMaterial.mainTexture = Resources.Load(textureName) as Texture;
+				planetMaterial = new Material (Shader.Find ("Standard"));
+				newPlanet.GetComponent<MeshRenderer> ().material = planetMaterial;
+				planetMaterial.mainTexture = Resources.Load (textureName) as Texture;
 
-                sunRelated = thisSide;
-                newPlanet.transform.parent = sunRelated.transform;
+				sunRelated = thisSide;
+				newPlanet.transform.parent = sunRelated.transform;
 
-                sideplanetText = new GameObject();
-                sideplanetText.name = "Side planet Name";
+				sideplanetText = new GameObject ();
+				sideplanetText.name = "Side planet Name";
 
-                sideplanetText.transform.localScale = new Vector3(0.05F, 0.05F, 0.05F);
-                var planetTextMesh = sideplanetText.AddComponent<TextMesh>();
-                planetTextMesh.text = planets[planetCounter, 4];
-                planetTextMesh.fontSize = 100;
-                sideplanetText.transform.parent = thisSide.transform;
-                sideplanetText.GetComponent<Renderer>().enabled = false;
+				sideplanetText.transform.localScale = new Vector3 (0.05F, 0.05F, 0.05F);
+				var planetTextMesh = sideplanetText.AddComponent<TextMesh> ();
+				planetTextMesh.text = planets [planetCounter, 4];
+				planetTextMesh.fontSize = 100;
+				sideplanetText.transform.parent = thisSide.transform;
+				sideplanetText.GetComponent<Renderer> ().enabled = false;
 
-                newPlanet.AddComponent<DisplayNames>();
-                newPlanet.GetComponent<DisplayNames>().text = sideplanetText;
-                sideplanetText.transform.position = newPlanet.transform.position;
+				newPlanet.AddComponent<DisplayNames> ();
+				newPlanet.GetComponent<DisplayNames> ().text = sideplanetText;
+				sideplanetText.transform.position = newPlanet.transform.position;
 
-            }
+			} else {
+				GameObject arrow;
+				arrow = GameObject.CreatePrimitive(PrimitiveType.Cube);
+				arrow.transform.parent = thisSide.transform;
+				arrow.transform.position = new Vector3 (16.5F, 0, 0);
+				arrow.transform.localScale = new Vector3 (3, .2F, .2F);
+				Material dec = new Material(Resources.Load("arrow") as Material);
+				arrow.GetComponent<MeshRenderer> ().material = dec;
+				arrow.transform.Rotate (0, 0, 180);
+			}
         }
         sideStarNumber++;
     }
@@ -554,9 +562,20 @@ public class Planets : MonoBehaviour
     }
 
     //------------------------------------------------------------------------------------//
+	public jsonDct getCurrentConfig()
+	{
+		jsonString_values = File.ReadAllText("Assets/Resources/InputValues.json");
+		val = JsonUtility.FromJson<jsonDct>(jsonString_values);
+		return val;
+		
+	}
 
     public void dealWithSystem_once(string[] starInfo, string[,] planetInfo, Vector3 offset, GameObject allThings)
     {
+		getCurrentConfig ();
+		orbitXScale = float.Parse(val.changedvalues.orbitXScale);
+		planetScaleFactor = float.Parse(val.changedvalues.planetScaleFactor);
+
         SolarCenter = new GameObject();
         AllOrbits = new GameObject();
         SunStuff = new GameObject();
