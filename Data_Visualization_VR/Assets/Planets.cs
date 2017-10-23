@@ -30,8 +30,9 @@ public class Planets : MonoBehaviour
 	float outerHab;
 
 	static int k = 0;
-	public static string jsonString = File.ReadAllText("Assets/Resources/Planetary_system_information.json");
-	public SystemList sl; //= JsonUtility.FromJson<SystemList>(jsonString);
+    public static string changedJsonString = File.ReadAllText("Assets/Resources/Planetary_system_information.json");
+	public static string jsonString = File.ReadAllText("Assets/Resources/Default_Planetary_system_information.json");
+    public SystemList sl; //= JsonUtility.FromJson<SystemList>(jsonString);
 
 	public static string jsonString_values = File.ReadAllText("Assets/Resources/InputValues.json");
 	public jsonDct val;// = JsonUtility.FromJson<jsonDct>(jsonString_values);
@@ -186,10 +187,9 @@ public class Planets : MonoBehaviour
 				//                Debug.Log(planetName + " --  " + planetSize);
 			}
 
-			planetSize = planetSize * 2.0F / 10000.0F;
-
-			textureName = getTexture (planetSize);
-
+            textureName = getTexture(planetSize);
+            planetSize = planetSize * 2.0F / 10000.0F;
+            
 			newPlanetCenter = new GameObject();
 			newPlanetCenter.name = planetName + "Center";
 			newPlanetCenter.AddComponent<rotate>();
@@ -554,6 +554,7 @@ public class Planets : MonoBehaviour
 		deleteStar.transform.parent = SolarSide.transform;
 		deleteStar.AddComponent<DeleteStar>();
 		deleteStar.GetComponent<DeleteStar>().starname = SolarSide.name;
+        deleteStar.GetComponent<DeleteStar>().p = this;
 		Material dec = new Material(Resources.Load("New Material") as Material);
 		deleteStar.GetComponent<MeshRenderer>().material = dec;
 
@@ -656,8 +657,8 @@ public class Planets : MonoBehaviour
 
 		newSun = GameObject.CreatePrimitive(PrimitiveType.Sphere);
 		newSun.AddComponent<rotate>();
-		newSun.name = star[1];
-		newSun.transform.position = new Vector3(-50f, -50f * lightYears, 0f);
+        newSun.name = star[1] + "sideSun3D";
+        newSun.transform.position = new Vector3(-50f, -50f * lightYears, 0f);
 		newSun.transform.localScale = new Vector3(centerSunSize, centerSunSize, centerSunSize);
 
 		newSun.GetComponent<rotate>().rotateSpeed = -0.25F;
@@ -669,7 +670,7 @@ public class Planets : MonoBehaviour
 		newSun.transform.parent = gstar.transform;
 
 		sunText = new GameObject();
-		sunText.name = newSun.name + " text";
+		sunText.name = newSun.name + "sideSun3Dtext";
 		sunText.transform.position = newSun.transform.position;
 		sunText.transform.localScale = new Vector3(0.01F, 0.01F, 0.01F);
 		var sunTextMesh = sunText.AddComponent<TextMesh>();
@@ -810,7 +811,8 @@ public class Planets : MonoBehaviour
 	{
 		Save = GameObject.CreatePrimitive(PrimitiveType.Cube);
 		Save.AddComponent<SaveState>();
-		SaveText = new GameObject();
+        Save.GetComponent<SaveState>().p = this;
+        SaveText = new GameObject();
 		//Save.transform.parent = mainMenu.transform;
 		//SaveText.transform.parent = mainMenu.transform;
 		createButtons(Save, SaveText, "SAVE", 0);
@@ -950,10 +952,96 @@ public class Planets : MonoBehaviour
 		sunLikeStars.GetComponent<FilterController> ().fd = fd;
 		sunLikeStars.GetComponent<FilterController> ().filterName = "sunLikeStars";
 
+        if (fd.ChangedFilters.earthSizePlanets == "1")
+            earthSized.GetComponent<MeshRenderer>().material.color = Color.blue;
+                    if (fd.ChangedFilters.sunLikeStars == "1")
+            sunLikeStars.GetComponent<MeshRenderer>().material.color = Color.blue;
+                    if (fd.ChangedFilters.nearestToSun == "1")
+            closestEarth.GetComponent<MeshRenderer>().material.color = Color.blue;
+                    if (fd.ChangedFilters.habitableSystems == "1")
+            habitableZones.GetComponent<MeshRenderer>().material.color = Color.blue;
+                    if (fd.ChangedFilters.moreThanTwoPlanets == "1")
+            planetsNumber.GetComponent<MeshRenderer>().material.color = Color.blue;
+    }
 
-	}
+    public void filterBasedOnSunName(string sunNameDel)
+    {
+        DeleteSideView();
+        List<systems> newSys = new List<systems>();
+        SystemList sl1 = sl;
 
-	public void filterBasedOnFlag(filterDict fd)
+        List<systems> systems = sl1.Systems;
+        bool shouldAdd = true;
+        foreach (systems system in systems)
+        {
+            shouldAdd = true;
+			string sunN = "Side View of" + system.sunName;
+			if (sunNameDel == sunN)
+                shouldAdd = false;
+            if (shouldAdd)
+                newSys.Add(system);
+
+        }
+
+
+        //sl = new SystemList ();
+        //sl.Systems = newSys;
+
+        //sl1.Systems = newSys;
+        sl.Systems = newSys;
+        SystemList newSl = new SystemList();
+        newSl.Systems = newSys;
+
+
+        
+
+
+        sideStarNumber = 0;
+        starNumber = 0;
+
+        allCenter = new GameObject();
+        int sunScaleRelative = 695500;
+        long austronamicalUnit = 149597870;
+        float year = 365;
+        int earth_mass = 1;
+        int earth_radius = 6371;
+        allCenter.name = "all systems";
+        var systemOffset = new Vector3(0, 0, 0);
+        var oneOffset = new Vector3(0, -30, 0);
+        int total_systems = newSys.Count;
+        string[] sol = new string[7];
+        k = 1;
+        for (int i = 0; i < total_systems; i++)
+        {
+            int k = 0;
+            sol[k++] = (float.Parse(newSys[i].sunScale) * sunScaleRelative).ToString();
+            sol[k++] = newSys[i].sunName;
+            sol[k++] = newSys[i].sunTexture;
+            sol[k++] = newSys[i].sunVar;
+            sol[k++] = newSys[i].sunHabitat;
+            sol[k++] = newSys[i].lightYears;
+            sol[k++] = newSys[i].discoveryMethod;
+            int planet_count = newSys[i].Planets.Count;
+            string[,] planets = new string[planet_count, 6];
+            for (int j = 0; j < planet_count; j++)
+            {
+                k = 0;
+                planets[j, k++] = (float.Parse(newSys[i].Planets[j].planetDistance) * austronamicalUnit).ToString();
+                planets[j, k++] = newSys[i].Planets[j].planetSize;
+                planets[j, k++] = (float.Parse(newSys[i].Planets[j].planetSpeed) / year).ToString();
+                planets[j, k++] = newSys[i].Planets[j].textureName;
+                planets[j, k++] = newSys[i].Planets[j].planetName;
+                planets[j, k++] = newSys[i].Planets[j].planetMass;
+            }
+            dealWithSystem(sol, planets, systemOffset, allCenter);
+            systemOffset += oneOffset;
+        }
+        allCenter.transform.localScale = new Vector3(0.1F, 0.1F, 0.1F);
+    }
+
+
+
+    public void filterBasedOnFlag(filterDict fd)
 	{
 		DeleteSideView ();
 		List<systems> newSys = new List<systems>();
@@ -1100,7 +1188,7 @@ public class Planets : MonoBehaviour
 
 	void DeleteSideView()
 	{
-		for (int index = 0; index <= 600; index++)
+		for (int index = 0; index < sl.Systems.Count; index++)
 		{
 			Vector3 v = new Vector3(0f, 8f - index * 4.5f, 10f);
 			Collider[] colliders;
@@ -1115,14 +1203,18 @@ public class Planets : MonoBehaviour
 					}
 				}
 			}
-		}
+            Destroy(GameObject.Find(sl.Systems[index].sunName + "sideSun3D"));
+            Destroy(GameObject.Find(sl.Systems[index].sunName + "sideSun3DsideSun3Dtext"));
+        }
 	}
 
 
 	void Start()
 	{
-
-		sl = JsonUtility.FromJson<SystemList>(jsonString);
+        k = 0;
+        sideStarNumber = 0;
+        starNumber = 0;
+        sl = JsonUtility.FromJson<SystemList>(changedJsonString);
 		SetInitialValues();
 		revolutionSpeed = float.Parse(val.orginalvalues.rotation_speed);
 		allCenter = new GameObject();
@@ -1187,7 +1279,8 @@ public class Planets : MonoBehaviour
 			}
 			//DeleteSideView();
 		}
-		/*        if (SteamVR_Controller.Input(SteamVR_Controller.GetDeviceIndex(SteamVR_Controller.DeviceRelation.Leftmost)).GetHairTriggerDown())
+		/*
+		if (SteamVR_Controller.Input(SteamVR_Controller.GetDeviceIndex(SteamVR_Controller.DeviceRelation.Leftmost)).GetHairTriggerDown())
         {
 
             if (menuDisplay)
@@ -1201,11 +1294,11 @@ public class Planets : MonoBehaviour
                 menuObject.name = "menuObject";
                 menuObject.transform.parent = allCenter.transform;
                 createMenu(menuObject);
-                createMenu2(menuObject);
+                createMenu2();
                 menuDisplay = true;
             }
-        }
-*/    }
+        }*/
+    }
 
 }
 

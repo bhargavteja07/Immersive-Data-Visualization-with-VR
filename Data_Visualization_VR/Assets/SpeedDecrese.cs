@@ -67,7 +67,7 @@ public class SpeedDecrese : MonoBehaviour
         //        Debug.Log("yoo");
         string jsonString_values = File.ReadAllText("Assets/Resources/InputValues.json");
         jsonDct val = JsonUtility.FromJson<jsonDct>(jsonString_values);
-        val.changedvalues.rotation_speed = (2 * float.Parse(val.changedvalues.rotation_speed)).ToString();
+        val.changedvalues.rotation_speed = (float.Parse(val.changedvalues.rotation_speed)/2F).ToString();
         //        Debug.Log(val.changedvalues.rotation_speed);
         JsonData jm;
         jm = JsonMapper.ToJson(val);

@@ -25,6 +25,12 @@ public class FilterController : MonoBehaviour {
 
 	private void OnMouseDown()
 	{
+
+		if (this.GetComponent<MeshRenderer> ().material.color == Color.blue)
+			this.GetComponent<MeshRenderer> ().material.color = Color.white;
+		else
+			this.GetComponent<MeshRenderer> ().material.color = Color.blue;
+		
 		if (filterName == "planetNumber") {
 			if (fd.ChangedFilters.moreThanTwoPlanets == "1")
 				fd.ChangedFilters.moreThanTwoPlanets = "0";

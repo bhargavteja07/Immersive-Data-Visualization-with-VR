@@ -8,6 +8,7 @@ using System.IO;
 public class SaveState : MonoBehaviour {
 
 	// Use this for initialization
+	public Planets p;
 	void Start () {
 		
 	}
@@ -19,6 +20,22 @@ public class SaveState : MonoBehaviour {
     private void OnMouseDown()
     {
         Debug.Log("saving...");
+
+		JsonData jdata;
+		jdata = JsonMapper.ToJson(p.sl);
+		string SystemSt = jdata.ToString();
+		File.WriteAllText("Assets/Resources/Planetary_system_information.json", SystemSt);
+
+
+		p.fd.OrginalFilters.moreThanTwoPlanets = p.fd.ChangedFilters.moreThanTwoPlanets;
+		p.fd.OrginalFilters.earthSizePlanets = p.fd.ChangedFilters.earthSizePlanets;
+		p.fd.OrginalFilters.sunLikeStars = p.fd.ChangedFilters.sunLikeStars;
+		p.fd.OrginalFilters.nearestToSun = p.fd.ChangedFilters.nearestToSun;
+		p.fd.OrginalFilters.habitableSystems = p.fd.ChangedFilters.habitableSystems;
+		jdata = JsonMapper.ToJson(p.fd);
+		SystemSt = jdata.ToString();
+		File.WriteAllText("Assets/Resources/SystemFilters.json", SystemSt);
+
         string jsonString_values = File.ReadAllText("Assets/Resources/InputValues.json");
         jsonDct val = JsonUtility.FromJson<jsonDct>(jsonString_values);
         val = JsonUtility.FromJson<jsonDct>(jsonString_values);

@@ -54,6 +54,7 @@
      <Compile Include="Assets\GrabbableObject.cs" />
      <Compile Include="Assets\Planets.cs" />
      <Compile Include="Assets\Reset.cs" />
+     <Compile Include="Assets\Resources\Starfield.cs" />
      <Compile Include="Assets\Resources\Swapping.cs" />
      <Compile Include="Assets\SaveState.cs" />
      <Compile Include="Assets\SpeedDecrese.cs" />
